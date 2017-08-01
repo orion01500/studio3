@@ -182,12 +182,12 @@ public abstract class JSParserPerformanceTest extends GlobalTimePerformanceTestC
 	 */
 	public void testDojo() throws Exception
 	{
-		assertParse(1, ITestFiles.DOJO_FILES);
+		assertParse(1000, ITestFiles.DOJO_FILES);
 	}
 
 	public void testDojoMinified() throws Exception
 	{
-		assertParse(1, "performance/dojo.js.minified.js");
+		assertParse(1000, "performance/dojo.js.minified.js");
 	}
 
 	/**
@@ -197,7 +197,7 @@ public abstract class JSParserPerformanceTest extends GlobalTimePerformanceTestC
 	 */
 	public void testExt() throws Exception
 	{
-		assertParse(1, ITestFiles.EXT_FILES);
+		assertParse(150, ITestFiles.EXT_FILES);
 	}
 
 	/**
@@ -207,7 +207,7 @@ public abstract class JSParserPerformanceTest extends GlobalTimePerformanceTestC
 	 */
 	public void testJaxerFiles() throws Exception
 	{
-		assertParse(1, ITestFiles.JAXER_FILES);
+		assertParse(150, ITestFiles.JAXER_FILES);
 	}
 
 	/**
@@ -217,7 +217,7 @@ public abstract class JSParserPerformanceTest extends GlobalTimePerformanceTestC
 	 */
 	public void testTiMobile() throws Exception
 	{
-		assertParse(1, ITestFiles.TIMOBILE_FILES);
+		assertParse(375, ITestFiles.TIMOBILE_FILES);
 	}
 
 	/**
@@ -227,7 +227,7 @@ public abstract class JSParserPerformanceTest extends GlobalTimePerformanceTestC
 	 */
 	public void testTinyMce() throws Exception
 	{
-		assertParse(1, ITestFiles.TINY_MCE_FILES);
+		assertParse(430, ITestFiles.TINY_MCE_FILES);
 	}
 
 	/**
