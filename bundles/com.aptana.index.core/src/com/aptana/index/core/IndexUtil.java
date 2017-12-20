@@ -149,7 +149,6 @@ public class IndexUtil
 			{
 				return CollectionsUtil.map(objects, new IMap<Object, String>()
 				{
-					@Override
 					public String map(Object item)
 					{
 						return item.toString();
