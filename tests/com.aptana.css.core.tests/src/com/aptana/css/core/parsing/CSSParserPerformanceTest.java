@@ -13,10 +13,10 @@ import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 
-import com.aptana.core.tests.GlobalTimePerformanceTestCase;
 import com.aptana.core.util.IOUtil;
 import com.aptana.parsing.IParseState;
 import com.aptana.parsing.ParseState;
+import com.aptana.testing.utils.GlobalTimePerformanceTestCase;
 
 public class CSSParserPerformanceTest extends GlobalTimePerformanceTestCase
 {

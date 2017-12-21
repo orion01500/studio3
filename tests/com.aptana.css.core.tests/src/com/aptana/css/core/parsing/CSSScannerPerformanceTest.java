@@ -13,8 +13,8 @@ import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 
-import com.aptana.core.tests.GlobalTimePerformanceTestCase;
 import com.aptana.core.util.IOUtil;
+import com.aptana.testing.utils.GlobalTimePerformanceTestCase;
 
 import beaver.Symbol;
 

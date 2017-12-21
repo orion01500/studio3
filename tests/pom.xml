@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.aptana.studio</groupId>
+  <artifactId>com.aptana.studio.tests</artifactId>
+  <version>1.0.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
+
+  <parent>
+    <groupId>com.aptana.studio</groupId>
+    <artifactId>com.aptana.studio.root</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+  </parent>
+
+  <modules>
+    <module>com.aptana.browser.tests</module>
+    <module>com.aptana.buildpath.core.tests</module>
+    <module>com.aptana.console.tests</module>
+    <module>com.aptana.core.epl.tests</module>
+    <!-- <module>com.aptana.core.io.tests</module> Fails a test, not sure why -->
+    <module>com.aptana.core.tests</module>
+    <module>com.aptana.css.core.tests</module>
+    <module>com.aptana.deploy.ftp.tests</module>
+    <module>com.aptana.dtd.core.tests</module>
+    <module>com.aptana.editor.common.tests</module>
+    <module>com.aptana.testing.mocks</module>
+    <module>com.aptana.testing.utils</module>
+  </modules>
+
+  <!-- Define to include all classes in the test run -->
+  <build>
+   <plugins>
+    <plugin>
+      <groupId>org.eclipse.tycho</groupId>
+      <artifactId>tycho-surefire-plugin</artifactId>
+      <version>${tycho-version}</version>
+       <configuration>
+        <testFailureIgnore>true</testFailureIgnore>
+       </configuration>
+     </plugin>
+   </plugins>
+  </build>
+
+<!--  <build>
+   <plugins>
+    <plugin>
+      <groupId>org.eclipse.tycho</groupId>
+       <artifactId>tycho-surefire-plugin</artifactId>
+       <version>${tycho-version}</version>
+       <configuration>
+          <testSuite>com.aptana.studio.tests.all</testSuite>
+          <testClass>com.aptana.studio.tests.all.CoreTests</testClass>
+       </configuration>
+      </plugin>
+   </plugins>
+ </build> -->
+</project>

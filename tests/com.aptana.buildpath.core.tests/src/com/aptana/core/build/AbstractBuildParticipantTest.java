@@ -4,7 +4,10 @@ import org.junit.After;
 import org.junit.Test;
 import org.junit.Before;
 import static org.junit.Assert.*;
+
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 
 import junit.framework.TestCase;
 
@@ -12,6 +15,7 @@ import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.runtime.IProgressMonitor;
 
 import com.aptana.buildpath.core.BuildPathCorePlugin;
+import com.aptana.core.resources.TaskTag;
 import com.aptana.index.core.build.BuildContext;
 import com.aptana.parsing.ast.ParseNode;
 
@@ -41,6 +45,11 @@ public class AbstractBuildParticipantTest
 
 			public void buildFile(BuildContext context, IProgressMonitor monitor)
 			{
+			}
+			
+			protected Collection<TaskTag> getTaskTags()
+			{
+				return Arrays.asList(new TaskTag("TODO", IMarker.PRIORITY_NORMAL));
 			}
 		};
 	}

@@ -6,7 +6,7 @@
  * Any modifications to this file must keep this entire header intact.
  */
 
-package com.aptana.core.tests;
+package com.aptana.testing.utils;
 
 import java.io.ByteArrayInputStream;
 import java.net.URI;

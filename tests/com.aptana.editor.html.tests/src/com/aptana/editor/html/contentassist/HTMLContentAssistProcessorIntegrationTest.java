@@ -36,7 +36,6 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.aptana.core.tests.TestProject;
 import com.aptana.core.util.FileUtil;
 import com.aptana.editor.common.AbstractThemeableEditor;
 import com.aptana.editor.common.tests.util.AssertUtil;
@@ -46,6 +45,7 @@ import com.aptana.editor.html.HTMLTestUtil;
 import com.aptana.editor.html.core.preferences.IPreferenceConstants;
 import com.aptana.editor.html.tests.HTMLEditorBasedTests;
 import com.aptana.projects.WebProjectNature;
+import com.aptana.testing.utils.TestProject;
 import com.aptana.webserver.core.SimpleWebServer;
 import com.aptana.webserver.core.WebServerCorePlugin;
 

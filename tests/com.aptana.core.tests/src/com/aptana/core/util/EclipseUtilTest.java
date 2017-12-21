@@ -42,6 +42,7 @@ public class EclipseUtilTest
 
 		boolean match = false;
 		String name = path.removeFileExtension().lastSegment();
+		System.out.println(name);
 		for (String launcherName : EclipseUtil.LAUNCHER_NAMES)
 		{
 			if (launcherName.equalsIgnoreCase(name))

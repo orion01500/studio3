@@ -13,7 +13,7 @@ import java.util.List;
 import org.eclipse.jface.text.Document;
 import org.eclipse.jface.text.IDocument;
 
-import com.aptana.core.tests.GlobalTimePerformanceTestCase;
+import com.aptana.testing.utils.GlobalTimePerformanceTestCase;
 
 public class PeerCharacterCloserPerfTest extends GlobalTimePerformanceTestCase
 {

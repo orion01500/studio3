@@ -18,9 +18,9 @@ import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.source.ICharacterPairMatcher;
 import org.eclipse.ui.ide.IDE;
 
-import com.aptana.core.tests.GlobalTimePerformanceTestCase;
 import com.aptana.core.util.ResourceUtil;
 import com.aptana.editor.common.AbstractThemeableEditor;
+import com.aptana.testing.utils.GlobalTimePerformanceTestCase;
 import com.aptana.ui.util.UIUtils;
 
 public class CharacterPairMatcherPerfTest extends GlobalTimePerformanceTestCase

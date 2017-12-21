@@ -10,13 +10,13 @@ import junit.framework.TestCase;
 
 import org.eclipse.core.runtime.jobs.Job;
 
-import com.aptana.core.tests.TestProject;
 import com.aptana.index.core.Index;
 import com.aptana.index.core.IndexManager;
 import com.aptana.index.core.IndexPlugin;
 import com.aptana.js.core.model.TypeElement;
 import com.aptana.js.internal.core.index.JSIndexWriter;
 import com.aptana.js.internal.core.index.JSMetadataLoader;
+import com.aptana.testing.utils.TestProject;
 
 public class JSIndexQueryHelperTest
 {

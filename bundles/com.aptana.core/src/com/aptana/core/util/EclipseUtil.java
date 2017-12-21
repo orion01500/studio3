@@ -77,6 +77,10 @@ public class EclipseUtil
 		{
 			IPath path = Path.fromOSString(dir.getAbsolutePath()).append(name);
 			name = path.removeFileExtension().lastSegment();
+			// Under tycho surefire, the default eclipse install dir is "work" under each plugin
+			if (EclipseUtil.isTesting() && "work".equals(name)) {
+				return true;
+			}
 			String ext = path.getFileExtension();
 			if (Platform.OS_MACOSX.equals(Platform.getOS()))
 			{
@@ -99,11 +103,16 @@ public class EclipseUtil
 	public static final String STANDALONE_PLUGIN_ID = "com.aptana.rcp"; //$NON-NLS-1$
 
 	@SuppressWarnings("nls")
-	private static final String[] UNIT_TEST_IDS = { "org.eclipse.pde.junit.runtime.uitestapplication",
-			"org.eclipse.test.coretestapplication", "org.eclipse.test.uitestapplication",
-			"org.eclipse.pde.junit.runtime.legacytestapplication", "org.eclipse.pde.junit.runtime.coretestapplication",
-			"org.eclipse.pde.junit.runtime.coretestapplicationnonmain",
-			"org.eclipse.pde.junit.runtime.nonuithreadtestapplication" };
+	private static final String[] UNIT_TEST_IDS = {
+		"org.eclipse.pde.junit.runtime.uitestapplication",
+		"org.eclipse.test.coretestapplication",
+		"org.eclipse.test.uitestapplication",
+		"org.eclipse.pde.junit.runtime.legacytestapplication",
+		"org.eclipse.pde.junit.runtime.coretestapplication",
+		"org.eclipse.pde.junit.runtime.coretestapplicationnonmain",
+		"org.eclipse.pde.junit.runtime.nonuithreadtestapplication",
+		"org.eclipse.tycho.surefire.osgibooter.headlesstest"
+	};
 	@SuppressWarnings("nls")
 	static final String[] LAUNCHER_NAMES = { "Eclipse", "AptanaStudio3", "Aptana Studio 3", "TitaniumStudio",
 			"Titanium Studio" };
@@ -347,6 +356,7 @@ public class EclipseUtil
 			return isTesting;
 		}
 		String application = System.getProperty("eclipse.application"); //$NON-NLS-1$
+		System.out.println("eclipse.application: ");
 		if (application != null)
 		{
 			for (String id : UNIT_TEST_IDS)

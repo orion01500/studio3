@@ -20,7 +20,6 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.ide.IDE;
 import org.eclipse.ui.texteditor.ITextEditor;
 
-import com.aptana.core.tests.TestProject;
 import com.aptana.editor.common.CommonEditorPlugin;
 import com.aptana.editor.common.ICommonConstants;
 import com.aptana.editor.common.scripting.IContentTypeTranslator;
@@ -28,6 +27,7 @@ import com.aptana.editor.common.scripting.IDocumentScopeManager;
 import com.aptana.editor.common.scripting.QualifiedContentType;
 import com.aptana.editor.common.scripting.commands.TextEditorUtils;
 import com.aptana.editor.epl.tests.EditorTestHelper;
+import com.aptana.testing.utils.TestProject;
 import com.aptana.ui.util.UIUtils;
 
 public class DocumentScopeManagerTest

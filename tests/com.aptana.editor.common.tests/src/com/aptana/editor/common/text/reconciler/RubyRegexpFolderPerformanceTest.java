@@ -19,8 +19,8 @@ import org.jruby.Ruby;
 import org.jruby.RubyRegexp;
 import org.jruby.util.RegexpOptions;
 
-import com.aptana.core.tests.GlobalTimePerformanceTestCase;
 import com.aptana.core.util.IOUtil;
+import com.aptana.testing.utils.GlobalTimePerformanceTestCase;
 
 public class RubyRegexpFolderPerformanceTest extends GlobalTimePerformanceTestCase
 {

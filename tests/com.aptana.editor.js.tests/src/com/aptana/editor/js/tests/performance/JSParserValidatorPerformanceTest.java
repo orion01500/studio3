@@ -15,14 +15,14 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 
 import com.aptana.core.build.AbstractBuildParticipant;
-import com.aptana.core.tests.GlobalTimePerformanceTestCase;
-import com.aptana.core.tests.TestProject;
 import com.aptana.core.util.IOUtil;
 import com.aptana.editor.epl.tests.EditorTestHelper;
 import com.aptana.index.core.RebuildIndexJob;
 import com.aptana.index.core.build.BuildContext;
 import com.aptana.js.core.JSCorePlugin;
 import com.aptana.js.internal.core.build.JSParserValidator;
+import com.aptana.testing.utils.GlobalTimePerformanceTestCase;
+import com.aptana.testing.utils.TestProject;
 
 public class JSParserValidatorPerformanceTest extends GlobalTimePerformanceTestCase
 {

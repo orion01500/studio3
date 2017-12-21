@@ -6,14 +6,15 @@
  <packaging>pom</packaging>
  <parent>
    <groupId>com.aptana.studio</groupId>
-   <artifactId>com.aptana.studio.build</artifactId>
+   <artifactId>com.aptana.studio.config</artifactId>
    <version>1.0.0-SNAPSHOT</version>
-  <relativePath>./releng/com.aptana.studio.build</relativePath>
+  <relativePath>./releng/com.aptana.studio.config</relativePath>
  </parent>
 
  <modules>
    <module>bundles</module>
    <module>features</module>
    <module>releng</module>
+   <module>tests</module>
  </modules>
 </project>

@@ -255,7 +255,7 @@ public abstract class AbstractBuildParticipant implements IBuildParticipant, IEx
 		Collection<IProblem> tasks = new ArrayList<IProblem>();
 		for (String line : lines)
 		{
-			for (TaskTag entry : TaskTag.getTaskTags())
+			for (TaskTag entry : getTaskTags())
 			{
 				String tag = entry.getName();
 				if (!TaskTag.isCaseSensitive())
@@ -282,6 +282,11 @@ public abstract class AbstractBuildParticipant implements IBuildParticipant, IEx
 			}
 		}
 		return tasks;
+	}
+
+	protected Collection<TaskTag> getTaskTags()
+	{
+		return TaskTag.getTaskTags();
 	}
 
 	private String getText(String source, IParseNode commentNode)

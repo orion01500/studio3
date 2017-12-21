@@ -14,12 +14,12 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.ide.IDE;
 import org.eclipse.ui.texteditor.ITextEditor;
 
-import com.aptana.core.tests.GlobalTimePerformanceTestCase;
 import com.aptana.core.util.ResourceUtil;
 import com.aptana.editor.common.CommonEditorPlugin;
 import com.aptana.editor.common.scripting.IDocumentScopeManager;
 import com.aptana.editor.common.scripting.commands.TextEditorUtils;
 import com.aptana.editor.epl.tests.EditorTestHelper;
+import com.aptana.testing.utils.GlobalTimePerformanceTestCase;
 import com.aptana.ui.util.UIUtils;
 
 public class DocumentScopeManagerPerformanceTest extends GlobalTimePerformanceTestCase
