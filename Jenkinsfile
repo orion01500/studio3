@@ -15,8 +15,8 @@ timestamps {
 					target: 'libraries_com'])
 					// Hack the target definition to point to libraries_com repo
 					targetFile = 'releng/com.aptana.studio.target/com.aptana.studio.target.target'
-					find = 'file:///Users/cwilliams/repos/libraries_com/releng/com.aptana.ide.libraries.subscription.update/target/repository'.replaceAll('/', '\/')
-					replace = "file://${pwd()}/libraries_com/repository".replaceAll('/', '\/')
+					find = 'file:///Users/cwilliams/repos/libraries_com/releng/com.aptana.ide.libraries.subscription.update/target/repository'.replaceAll('/', '\\/')
+					replace = "file://${pwd()}/libraries_com/repository".replaceAll('/', '\\/')
 					sh "sed -i 's/${find}/${replace}/g' ${targetFile}"
 			}
 
