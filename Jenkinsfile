@@ -1,7 +1,6 @@
 #! groovy
 timestamps {
-	// Need maven 3.3+
-	node('edtftpjpro && linux && eclipse && jdk && vncserver') {
+	node('((linux && vncserver) || osx) && jdk') {
 		try {
 			stage('Checkout') {
 				checkout scm
@@ -27,7 +26,7 @@ timestamps {
 				junit 'tests/*/target/surefire-reports/TEST-*.xml'
 				dir('releng/com.aptana.studio.update/target') {
 					// FIXME: To keep backwards compatability with existing build pipeline, I probably need to make the "repository" dir be "dist"
-					archiveArtifacts artifacts: "repository/**/*"
+					archiveArtifacts artifacts: 'repository/**/*'
 					def jarName = sh(returnStdout: true, script: 'ls repository/features/com.aptana.feature_*.jar').trim()
 					def version = (jarName =~ /.*?_(.+)\.jar/)[0][1]
 					currentBuild.displayName = "#${version}-${currentBuild.number}"
