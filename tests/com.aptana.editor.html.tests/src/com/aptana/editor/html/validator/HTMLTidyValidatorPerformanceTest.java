@@ -16,14 +16,17 @@ import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
+import com.aptana.core.tests.GlobalTimePerformanceTestCase;
 import com.aptana.core.util.ResourceUtil;
 import com.aptana.editor.epl.tests.EditorTestHelper;
 import com.aptana.editor.html.HTMLPlugin;
 import com.aptana.index.core.FileStoreBuildContext;
 import com.aptana.index.core.build.BuildContext;
-import com.aptana.testing.utils.GlobalTimePerformanceTestCase;
+import com.aptana.scripting.tests.PerformanceTests;
 
+@Category({ PerformanceTests.class })
 public class HTMLTidyValidatorPerformanceTest extends GlobalTimePerformanceTestCase
 {
 

@@ -95,9 +95,6 @@
     <module>com.aptana.webserver.ui</module>
     <module>com.aptana.workbench</module>
     <module>com.aptana.xml.core</module>
-    <module>com.fasterxml.jackson.core.jackson-annotations</module>
-    <module>com.fasterxml.jackson.core.jackson-core</module>
-    <module>com.fasterxml.jackson.core.jackson-databind</module>
     <module>mestevens.xcode.parser</module>
     <module>org.apache.httpcomponents.httpcore-nio</module>
     <module>org.apache.velocity</module>

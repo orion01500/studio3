@@ -34,7 +34,6 @@ import com.aptana.editor.html.parsing.ast.HTMLElementNode;
 import com.aptana.js.core.IJSConstants;
 import com.aptana.js.core.parsing.ast.JSParseRootNode;
 import com.aptana.parsing.ParseResult;
-import com.aptana.parsing.ast.ASTUtil;
 import com.aptana.parsing.ast.INameNode;
 import com.aptana.parsing.ast.IParseError;
 import com.aptana.parsing.ast.IParseNode;
@@ -406,12 +405,12 @@ public class HTMLParserTest
 	 * 
 	 * @throws Exception
 	 */
-	public void trimToSize() throws Exception
-	{
-		fParseState = new HTMLParseState(getSource("performance/amazon.html"));
-
-		ASTUtil.showBeforeAndAfterTrim(parse());
-	}
+//	public void trimToSize() throws Exception
+//	{
+//		fParseState = new HTMLParseState(getSource("performance/amazon.html"));
+//
+//		ASTUtil.showBeforeAndAfterTrim(parse());
+//	}
 
 	protected void parseTest(String source) throws Exception
 	{

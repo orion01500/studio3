@@ -1,81 +1,52 @@
 #! groovy
-@Library('pipeline-build') _
+timestamps {
+	// Need maven 3.3+
+	node('edtftpjpro && linux && eclipse && jdk && vncserver') {
+		try {
+			stage('Checkout') {
+				checkout scm
+			}
 
-timestamps() {
-	node('linux && ant && eclipse && jdk && vncserver') {
-		stage('Checkout') {
-			// checkout scm
-			// Hack for JENKINS-37658 - see https://support.cloudbees.com/hc/en-us/articles/226122247-How-to-Customize-Checkout-for-Pipeline-Multibranch
-			checkout([
-				$class: 'GitSCM',
-				branches: scm.branches,
-				extensions: scm.extensions + [
-					[$class: 'CleanBeforeCheckout'],
-					[$class: 'CloneOption', depth: 30, honorRefspec: true, noTags: true, reference: '', shallow: true, timeout: 30]
-				],
-				userRemoteConfigs: scm.userRemoteConfigs
-			])
+			stage('Dependencies') {
+				step([$class: 'CopyArtifact',
+					filter: 'repository/',
+					fingerprintArtifacts: true,
+					projectName: "../libraries_com/tycho",
+					target: 'libraries_com'])
+					// Hack the target definition to point to libraries_com repo
+					targetFile = 'releng/com.aptana.studio.target/com.aptana.studio.target.target'
+					find = 'file:///Users/cwilliams/repos/libraries_com/releng/com.aptana.ide.libraries.subscription.update/target/repository'.replaceAll('/', '\/')
+					replace = "file://${pwd()}/libraries_com/repository".replaceAll('/', '\/')
+					sh "sed -i 's/${find}/${replace}/g' ${targetFile}"
+			}
+
+			stage('Build') {
+				withEnv(["PATH+MAVEN=${tool name: 'Maven 3.5.0', type: 'maven'}/bin"]) {
+					sh 'mvn clean verify'
+				}
+				junit 'tests/*/target/surefire-reports/TEST-*.xml'
+				dir('releng/com.aptana.studio.update/target') {
+					// FIXME: To keep backwards compatability with existing build pipeline, I probably need to make the "repository" dir be "dist"
+					archiveArtifacts artifacts: "repository/**/*"
+					def jarName = sh(returnStdout: true, script: 'ls repository/features/com.aptana.feature_*.jar').trim()
+					def version = (jarName =~ /.*?_(.+)\.jar/)[0][1]
+					currentBuild.displayName = "#${version}-${currentBuild.number}"
+				}
+			}
+
+			// If not a PR, trigger downstream builds for same branch
+			if (!env.BRANCH_NAME.startsWith('PR-')) {
+				build job: "appcelerator-studio/titanium_studio/${env.BRANCH_NAME}", wait: false
+				build job: "../studio3-php/${env.BRANCH_NAME}", wait: false
+				build job: "../studio3-ruby/${env.BRANCH_NAME}", wait: false
+				build job: "../Pydev/${env.BRANCH_NAME}", wait: false
+			}
+		} catch (e) {
+			// if any exception occurs, mark the build as failed
+			currentBuild.result = 'FAILURE'
+			throw e
+		// } finally {
+			// step([$class: 'WsCleanup', notFailBuild: true])
 		}
-
-		def librariesComRepo = "file://${env.WORKSPACE}/libraries-com/dist/"
-		def studio3Repo = "file://${env.WORKSPACE}/dist/"
-		def eclipseHome = '/usr/local/eclipse-4.7.1a'
-		def launcherPlugin = 'org.eclipse.equinox.launcher_1.4.0.v20161219-1356'
-		def builderPlugin = 'org.eclipse.pde.build_3.9.300.v20170515-0912'
-
-		buildPlugin {
-			dependencies = ['libraries-com': '../libraries_com']
-			builder = 'com.aptana.feature.build'
-			properties = [
-				'libraries-com.p2.repo': librariesComRepo,
-				'vanilla.eclipse': eclipseHome,
-				'launcher.plugin': launcherPlugin,
-				'builder.plugin': builderPlugin,
-			]
-		}
-
-		testPlugin {
-			builder = 'com.aptana.studio.tests.build'
-			properties = [
-				'studio3.p2.repo': studio3Repo,
-				'vanilla.eclipse': eclipseHome,
-				'launcher.plugin': launcherPlugin,
-				'builder.plugin': builderPlugin,
-				'libraries-com.p2.repo': librariesComRepo,
-				's3.accessKey': '${S3_ACCESS_KEY}',
-				's3.secretAccessKey': '${S3_SECRET_ACCESS_KEY}',
-				'ftp.host': '10.0.1.52',
-				'ftp.username': 'ftp_test',
-				'ftp.password': '${FTP_PASSWORD}',
-				'ftp.path': '/home/ftp_test',
-				'sftp.host': '10.0.1.52',
-				'sftp.username': 'ftp_test',
-				'sftp.password': '${FTP_PASSWORD}',
-				'sftp.path': '/home/ftp_test',
-				'ftps.host': 'app.brickftp.com',
-				'ftps.username': 'ftp_test',
-				'ftps.password': '${FTP_PASSWORD}',
-				'ftps.path': '/',
-				'ftp.supports.setmodtime': 'true',
-				'ftp.supports.foldersetmodtime': 'false',
-				'ftp.supports.permissions': 'false',
-				'ftp.supports.changegroup': 'false',
-				'ftps.supports.setmodtime': 'true',
-				'ftps.supports.foldersetmodtime': 'false',
-				'ftps.supports.changegroup': 'false',
-				'ftps.supports.permissions': 'false'
-			]
-			classPattern = 'eclipse/plugins/com.aptana.parsing_*,eclipse/plugins/com.aptana.terminal_*,eclipse/plugins/com.aptana.git.core_*,eclipse/plugins'
-			inclusionPattern = 'com.aptana.*.core_*.jar, com.aptana.browser_*.jar, com.aptana.build*.jar, com.aptana.configurations_*.jar, com.aptana.console_*.jar, com.aptana.core*.jar, com.aptana.debug*.jar, com.aptana.debug.*.jar, com.aptana.deploy*.jar, com.aptana.editor.*.jar, com.aptana.explorer_*.jar com.aptana.file*.jar, com.aptana.formatter.*.jar, com.aptana.git.*.jar, com.aptana.index.*.jar, com.aptana.jira.*.jar, com.aptana.js*.jar, com.aptana.parsing*.jar, com.aptana.portal.*.jar, com.aptana.preview*.jar, com.aptana.projects*.jar, com.aptana.samples.*.jar, com.aptana.scripting*.jar, com.aptana.syncing.*.jar, com.aptana.theme*.jar, com.aptana.ui*.jar, com.aptana.usage_*.jar, com.aptana.webserver.*.jar, com.aptana.workbench_*.jar'
-			exclusionPattern = 'lib.org.chromium*.jar,**/tests/**/*,**/*Test*.*,**/Messages.*,com.aptana.*.tests*.jar,com.aptana.commandline.launcher_*.jar,com.aptana.documentation_*.jar,com.aptana.org.eclipse.tm.terminal_*.jar,com.aptana.swt.webkitbrowser*.jar,com.aptana.testing.*.jar,com.aptana.libraries_*.jar,com.aptana.jetty.*.jar,com.aptana.portablegit.win32_*.jar,com.aptana.scripting_*.jar,org.*.jar,mestevens.xcode.parser_*.jar,com.fasterxml.jackson*.jar'
-		}
-
-		// If not a PR, trigger downstream builds for same branch
-		if (!env.BRANCH_NAME.startsWith('PR-')) {
-			build job: "appcelerator-studio/titanium_studio/${env.BRANCH_NAME}", wait: false
-			build job: "../studio3-php/${env.BRANCH_NAME}", wait: false
-			build job: "../studio3-ruby/${env.BRANCH_NAME}", wait: false
-			build job: "../Pydev/${env.BRANCH_NAME}", wait: false
-		}
-	} // end node
-} //end timestamps
+	} // node
+} // timestamps

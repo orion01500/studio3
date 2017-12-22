@@ -13,3 +13,4 @@ Require-Bundle: org.junit;bundle-version="4.0.0",
  com.aptana.testing.mocks,
  com.aptana.testing.utils;bundle-version="1.0.0"
 Export-Package: com.aptana.editor.xml.tests
+Import-Package: com.aptana.editor.common.tests

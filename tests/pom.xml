@@ -18,17 +18,50 @@
     <module>com.aptana.buildpath.core.tests</module>
     <module>com.aptana.console.tests</module>
     <module>com.aptana.core.epl.tests</module>
-    <!-- <module>com.aptana.core.io.tests</module> Fails a test, not sure why -->
+    <module>com.aptana.core.io.tests</module>
     <module>com.aptana.core.tests</module>
     <module>com.aptana.css.core.tests</module>
     <module>com.aptana.deploy.ftp.tests</module>
     <module>com.aptana.dtd.core.tests</module>
     <module>com.aptana.editor.common.tests</module>
+    <module>com.aptana.editor.css.formatter.tests</module>
+    <module>com.aptana.editor.css.tests</module>
+    <module>com.aptana.editor.dtd.tests</module>
+    <module>com.aptana.editor.html.formatter.tests</module>
+    <module>com.aptana.editor.html.tests</module>
+    <module>com.aptana.editor.js.formatter.tests</module>
+    <module>com.aptana.editor.js.tests</module>
+    <module>com.aptana.editor.json.tests</module>
+    <module>com.aptana.editor.xml.formatter.tests</module>
+    <module>com.aptana.editor.xml.tests</module>
+    <module>com.aptana.filesystem.ftp.tests</module>
+    <module>com.aptana.filesystem.http.tests</module>
+    <module>com.aptana.filesystem.secureftp.tests</module>
+    <module>com.aptana.git.core.tests</module>
+    <module>com.aptana.git.ui.tests</module>
+    <module>com.aptana.index.core.tests</module>
+    <module>com.aptana.jira.core.tests</module>
+    <module>com.aptana.js.core.tests</module>
+    <module>com.aptana.js.debug.core.tests</module>
+    <module>com.aptana.parsing.tests</module>
+    <module>com.aptana.portal.ui.tests</module>
+    <module>com.aptana.samples.tests</module>
+    <module>com.aptana.samples.ui.tests</module>
+    <module>com.aptana.scripting.tests</module>
+    <module>com.aptana.syncing.core.tests</module>
+    <module>com.aptana.syncing.ui.tests</module>
     <module>com.aptana.testing.mocks</module>
     <module>com.aptana.testing.utils</module>
+    <module>com.aptana.theme.tests</module>
+    <module>com.aptana.ui.tests</module>
+    <module>com.aptana.usage.tests</module>
+    <module>com.aptana.webserver.core.tests</module>
+    <module>com.aptana.xml.core.tests</module>
+    <module>org.eclipse.tm.terminal.test</module>
+    <module>org.kohsuke.junit</module>
   </modules>
 
-  <!-- Define to include all classes in the test run -->
+  <!-- For now, ignore failures. Also skip performance tests -->
   <build>
    <plugins>
     <plugin>
@@ -37,22 +70,9 @@
       <version>${tycho-version}</version>
        <configuration>
         <testFailureIgnore>true</testFailureIgnore>
+        <excludedGroups>com.aptana.testing.PerformanceTests</excludedGroups>
        </configuration>
      </plugin>
    </plugins>
   </build>
-
-<!--  <build>
-   <plugins>
-    <plugin>
-      <groupId>org.eclipse.tycho</groupId>
-       <artifactId>tycho-surefire-plugin</artifactId>
-       <version>${tycho-version}</version>
-       <configuration>
-          <testSuite>com.aptana.studio.tests.all</testSuite>
-          <testClass>com.aptana.studio.tests.all.CoreTests</testClass>
-       </configuration>
-      </plugin>
-   </plugins>
- </build> -->
 </project>

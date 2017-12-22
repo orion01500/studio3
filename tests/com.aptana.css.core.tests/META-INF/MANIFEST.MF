@@ -10,4 +10,5 @@ Require-Bundle: org.junit,
  org.eclipse.test.performance,
  com.aptana.testing.utils;bundle-version="1.0.0"
 Export-Package: com.aptana.css.core.tests
-Import-Package: com.aptana.buildpath.core.tests
+Import-Package: com.aptana.buildpath.core.tests,
+ com.aptana.core.tests
