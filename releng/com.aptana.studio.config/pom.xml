@@ -10,7 +10,8 @@
 		<tycho-version>1.0.0</tycho-version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
- <repositories>
+
+	<!-- <repositories>
 		<repository>
 			<id>oxygen</id>
 			<layout>p2</layout>
@@ -21,7 +22,7 @@
 			<layout>p2</layout>
 			<url>file:///Users/cwilliams/Downloads/archive/repository</url>
 		</repository>
-	</repositories>
+	</repositories> -->
 
 	<build>
 		<plugins>
