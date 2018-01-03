@@ -18,7 +18,7 @@ import com.aptana.core.tests.GlobalTimePerformanceTestCase;
 import com.aptana.core.util.IOUtil;
 import com.aptana.css.core.parsing.CSSTokenType;
 import com.aptana.editor.css.parsing.CSSScanner;
-import com.aptana.scripting.tests.PerformanceTests;
+import com.aptana.testing.categories.PerformanceTests;
 
 @Category({ PerformanceTests.class })
 public class CSSScannerPerformanceTest extends GlobalTimePerformanceTestCase

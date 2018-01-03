@@ -10,8 +10,12 @@ import org.eclipse.test.performance.PerformanceMeter;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.junit.rules.TestName;
 
+import com.aptana.testing.categories.PerformanceTests;
+
+@Category({ PerformanceTests.class })
 public class GitIndexPerformanceTest extends GitTestCase
 {
 

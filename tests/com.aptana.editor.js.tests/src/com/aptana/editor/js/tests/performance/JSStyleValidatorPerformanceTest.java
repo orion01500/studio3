@@ -12,7 +12,7 @@ import org.junit.experimental.categories.Category;
 import com.aptana.core.build.AbstractBuildParticipant;
 import com.aptana.js.core.JSCorePlugin;
 import com.aptana.js.internal.core.build.JSStyleValidator;
-import com.aptana.scripting.tests.PerformanceTests;
+import com.aptana.testing.categories.PerformanceTests;
 
 @Category({ PerformanceTests.class })
 public class JSStyleValidatorPerformanceTest extends JSLintValidatorPerformanceTest

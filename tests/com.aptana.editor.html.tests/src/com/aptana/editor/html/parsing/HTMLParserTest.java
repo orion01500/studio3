@@ -10,25 +10,18 @@ package com.aptana.editor.html.parsing;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.text.MessageFormat;
 import java.util.List;
 
-import org.eclipse.core.runtime.FileLocator;
-import org.eclipse.core.runtime.Path;
-import org.eclipse.core.runtime.Platform;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import com.aptana.core.build.IProblem;
 import com.aptana.core.util.FileUtil;
-import com.aptana.core.util.IOUtil;
 import com.aptana.core.util.StringUtil;
 import com.aptana.css.core.ICSSConstants;
 import com.aptana.css.core.parsing.ast.CSSParseRootNode;
-import com.aptana.editor.html.HTMLPlugin;
 import com.aptana.editor.html.core.IHTMLConstants;
 import com.aptana.editor.html.parsing.ast.HTMLElementNode;
 import com.aptana.js.core.IJSConstants;
@@ -63,20 +56,6 @@ public class HTMLParserTest
 	public void tearDown() throws Exception
 	{
 		fParser = null;
-	}
-
-	/**
-	 * getSource
-	 * 
-	 * @param resourceName
-	 * @return
-	 * @throws IOException
-	 */
-	private String getSource(String resourceName) throws IOException
-	{
-		InputStream stream = FileLocator.openStream(Platform.getBundle(HTMLPlugin.PLUGIN_ID), new Path(resourceName),
-				false);
-		return IOUtil.read(stream);
 	}
 
 	@Test
@@ -405,12 +384,12 @@ public class HTMLParserTest
 	 * 
 	 * @throws Exception
 	 */
-//	public void trimToSize() throws Exception
-//	{
-//		fParseState = new HTMLParseState(getSource("performance/amazon.html"));
-//
-//		ASTUtil.showBeforeAndAfterTrim(parse());
-//	}
+	// public void trimToSize() throws Exception
+	// {
+	// fParseState = new HTMLParseState(getSource("performance/amazon.html"));
+	//
+	// ASTUtil.showBeforeAndAfterTrim(parse());
+	// }
 
 	protected void parseTest(String source) throws Exception
 	{

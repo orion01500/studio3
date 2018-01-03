@@ -10,10 +10,6 @@ package com.aptana.editor.html.tests.performance;
 import java.io.IOException;
 import java.text.MessageFormat;
 
-import junit.extensions.TestSetup;
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
@@ -24,11 +20,18 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.test.performance.Performance;
 import org.eclipse.test.performance.PerformanceMeter;
 import org.eclipse.ui.PartInitException;
+import org.junit.experimental.categories.Category;
 
 import com.aptana.editor.epl.tests.EditorTestHelper;
 import com.aptana.editor.epl.tests.OpenEditorTest;
 import com.aptana.editor.epl.tests.ResourceTestHelper;
+import com.aptana.testing.categories.PerformanceTests;
 
+import junit.extensions.TestSetup;
+import junit.framework.Test;
+import junit.framework.TestSuite;
+
+@Category({ PerformanceTests.class })
 public class OpenHTMLEditorTest extends OpenEditorTest
 {
 
@@ -234,8 +237,8 @@ public class OpenHTMLEditorTest extends OpenEditorTest
 
 		private void replicate(String baseName) throws CoreException
 		{
-			ResourceTestHelper.replicate(getFile(baseName), getPrefix(baseName), FILE_SUFFIX, WARM_UP_RUNS
-					+ MEASURED_RUNS, ResourceTestHelper.IfExists.SKIP);
+			ResourceTestHelper.replicate(getFile(baseName), getPrefix(baseName), FILE_SUFFIX,
+					WARM_UP_RUNS + MEASURED_RUNS, ResourceTestHelper.IfExists.SKIP);
 		}
 
 		private void setUpProject() throws Exception
@@ -254,9 +257,8 @@ public class OpenHTMLEditorTest extends OpenEditorTest
 			String fileName = baseName + FILE_SUFFIX;
 			// Copy project contents from under "performance"
 			IFile file = project.getFile(fileName);
-			file.create(
-					FileLocator.openStream(Platform.getBundle("com.aptana.editor.html.tests"),
-							Path.fromPortableString("performance/" + fileName), false), true, null);
+			file.create(FileLocator.openStream(Platform.getBundle("com.aptana.editor.html.tests"),
+					Path.fromPortableString("performance/" + fileName), false), true, null);
 			// verify we created the file.
 			assertTrue(MessageFormat.format("Failed to copy performance file ({0}) into project", fileName),
 					file.exists());

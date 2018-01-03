@@ -25,6 +25,7 @@ import org.eclipse.core.runtime.preferences.InstanceScope;
 import com.aptana.core.CorePlugin;
 import com.aptana.core.ICorePreferenceConstants;
 import com.aptana.core.logging.IdeLog;
+import com.aptana.core.util.StringUtil;
 
 public class TaskTag
 {
@@ -158,6 +159,9 @@ public class TaskTag
 			final IScopeContext[] contexts = new IScopeContext[] { InstanceScope.INSTANCE, DefaultScope.INSTANCE };
 			String rawTagNames = Platform.getPreferencesService().getString(PREF_PLUGIN_ID,
 					ICorePreferenceConstants.TASK_TAG_NAMES, null, contexts);
+			if (StringUtil.isEmpty(rawTagNames)) {
+				return Collections.emptyList();
+			}
 			String rawTagPriorities = Platform.getPreferencesService().getString(PREF_PLUGIN_ID,
 					ICorePreferenceConstants.TASK_TAG_PRIORITIES, null, contexts);
 			return createTaskTags(rawTagNames, rawTagPriorities);

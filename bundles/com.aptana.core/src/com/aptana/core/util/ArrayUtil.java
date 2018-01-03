@@ -117,4 +117,20 @@ public class ArrayUtil
 		}
 		return false;
 	}
+
+	public static Boolean contains(String[] array, String string)
+	{
+		if (array == null || array.length == 0)
+		{
+			return false;
+		}
+		for (String x : array)
+		{
+			if (x.equals(string))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
 }

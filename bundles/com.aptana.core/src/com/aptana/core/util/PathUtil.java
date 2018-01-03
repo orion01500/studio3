@@ -50,7 +50,7 @@ public class PathUtil
 	 */
 	public static String convertPATH(String rawPATH)
 	{
-		if (rawPATH == null || !Platform.OS_WIN32.equals(Platform.getOS()))
+		if (rawPATH == null || !PlatformUtil.isWindows())
 		{
 			return rawPATH;
 		}

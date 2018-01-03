@@ -7,18 +7,11 @@
  */
 package com.aptana.editor.css.tests.performance;
 
-import org.junit.runners.Suite.SuiteClasses;
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.Enumeration;
-
-import junit.extensions.TestSetup;
-import junit.framework.Test;
-import junit.framework.TestSuite;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
@@ -29,15 +22,24 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.test.performance.Performance;
 import org.eclipse.test.performance.PerformanceMeter;
 import org.eclipse.ui.PartInitException;
+import org.junit.experimental.categories.Category;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+import org.junit.runners.Suite.SuiteClasses;
 import org.osgi.framework.Bundle;
 
 import com.aptana.core.util.ResourceUtil;
 import com.aptana.editor.epl.tests.EditorTestHelper;
 import com.aptana.editor.epl.tests.OpenEditorTest;
 import com.aptana.editor.epl.tests.ResourceTestHelper;
+import com.aptana.testing.categories.PerformanceTests;
+
+import junit.extensions.TestSetup;
+import junit.framework.Test;
 
 @RunWith(Suite.class)
 @SuiteClasses({})
+@Category({ PerformanceTests.class })
 public class OpenCSSEditorTest extends OpenEditorTest
 {
 
@@ -71,28 +73,28 @@ public class OpenCSSEditorTest extends OpenEditorTest
 		super(name);
 	}
 
-//	public static Test suite()
-//	{
-//		// ensure sequence
-//		TestSuite suite = new TestSuite(OpenCSSEditorTest.class.getName());
-//		suite.addTest(new OpenCSSEditorTest("testOpenCSSEditor1")); // YUI
-//		// suite.addTest(new OpenCSSEditorTest("testOpenFromMetadata"));
-//		// suite.addTest(new OpenCSSEditorTest("testOpenGithubFormatted"));
-//		// suite.addTest(new OpenCSSEditorTest("testOpenGithubMinimized"));
-//		suite.addTest(new OpenCSSEditorTest("testOpenLargeMinifiedFileFoldingOnOutlineOn")); // WORDPRESS_MINIMIZED
-//		// suite.addTest(new OpenCSSEditorTest("testOpenLargeMinifiedFileFoldingOffOutlineOn")); // WORDPRESS_MINIMIZED
-//		suite.addTest(new OpenCSSEditorTest("testOpenLargeMinifiedFileFoldingOnOutlineOff")); // WORDPRESS_MINIMIZED
-//		// suite.addTest(new OpenCSSEditorTest("testOpenLargeMinifiedFileFoldingOffOutlineOff")); // WORDPRESS_MINIMIZED
-//		suite.addTest(new OpenCSSEditorTest("testOpenLargeFileFoldingOnOutlineOn")); // WORDPRESS_ADMIN
-//		// suite.addTest(new OpenCSSEditorTest("testOpenLargeFileFoldingOffOutlineOn")); // WORDPRESS_ADMIN
-//		suite.addTest(new OpenCSSEditorTest("testOpenLargeFileFoldingOnOutlineOff")); // WORDPRESS_ADMIN
-//		// suite.addTest(new OpenCSSEditorTest("testOpenLargeFileFoldingOffOutlineOff")); // WORDPRESS_ADMIN
-//		return new Setup(suite);
-//	}
-//
-//	/*
-//	 * @see junit.framework.TestCase#setUp()
-//	 */
+	// public static Test suite()
+	// {
+	// // ensure sequence
+	// TestSuite suite = new TestSuite(OpenCSSEditorTest.class.getName());
+	// suite.addTest(new OpenCSSEditorTest("testOpenCSSEditor1")); // YUI
+	// // suite.addTest(new OpenCSSEditorTest("testOpenFromMetadata"));
+	// // suite.addTest(new OpenCSSEditorTest("testOpenGithubFormatted"));
+	// // suite.addTest(new OpenCSSEditorTest("testOpenGithubMinimized"));
+	// suite.addTest(new OpenCSSEditorTest("testOpenLargeMinifiedFileFoldingOnOutlineOn")); // WORDPRESS_MINIMIZED
+	// // suite.addTest(new OpenCSSEditorTest("testOpenLargeMinifiedFileFoldingOffOutlineOn")); // WORDPRESS_MINIMIZED
+	// suite.addTest(new OpenCSSEditorTest("testOpenLargeMinifiedFileFoldingOnOutlineOff")); // WORDPRESS_MINIMIZED
+	// // suite.addTest(new OpenCSSEditorTest("testOpenLargeMinifiedFileFoldingOffOutlineOff")); // WORDPRESS_MINIMIZED
+	// suite.addTest(new OpenCSSEditorTest("testOpenLargeFileFoldingOnOutlineOn")); // WORDPRESS_ADMIN
+	// // suite.addTest(new OpenCSSEditorTest("testOpenLargeFileFoldingOffOutlineOn")); // WORDPRESS_ADMIN
+	// suite.addTest(new OpenCSSEditorTest("testOpenLargeFileFoldingOnOutlineOff")); // WORDPRESS_ADMIN
+	// // suite.addTest(new OpenCSSEditorTest("testOpenLargeFileFoldingOffOutlineOff")); // WORDPRESS_ADMIN
+	// return new Setup(suite);
+	// }
+	//
+	// /*
+	// * @see junit.framework.TestCase#setUp()
+	// */
 	protected void setUp() throws Exception
 	{
 		super.setUp();
@@ -257,8 +259,8 @@ public class OpenCSSEditorTest extends OpenEditorTest
 
 		private void replicate(String baseFileName) throws CoreException
 		{
-			ResourceTestHelper.replicate(getFile(baseFileName), getPrefix(baseFileName), FILE_SUFFIX, WARM_UP_RUNS
-					+ MEASURED_RUNS, ResourceTestHelper.IfExists.SKIP);
+			ResourceTestHelper.replicate(getFile(baseFileName), getPrefix(baseFileName), FILE_SUFFIX,
+					WARM_UP_RUNS + MEASURED_RUNS, ResourceTestHelper.IfExists.SKIP);
 		}
 
 		private void setUpProject() throws Exception

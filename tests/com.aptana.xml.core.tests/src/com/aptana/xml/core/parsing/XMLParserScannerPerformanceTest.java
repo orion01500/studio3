@@ -17,7 +17,7 @@ import org.junit.experimental.categories.Category;
 import com.aptana.core.tests.GlobalTimePerformanceTestCase;
 import com.aptana.core.util.IOUtil;
 import com.aptana.dtd.core.parsing.Terminals;
-import com.aptana.xml.core.tests.PerformanceTests;
+import com.aptana.testing.categories.PerformanceTests;
 
 @Category({ PerformanceTests.class })
 public class XMLParserScannerPerformanceTest extends GlobalTimePerformanceTestCase

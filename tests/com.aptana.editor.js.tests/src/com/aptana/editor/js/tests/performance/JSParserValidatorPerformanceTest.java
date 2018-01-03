@@ -23,7 +23,7 @@ import com.aptana.index.core.RebuildIndexJob;
 import com.aptana.index.core.build.BuildContext;
 import com.aptana.js.core.JSCorePlugin;
 import com.aptana.js.internal.core.build.JSParserValidator;
-import com.aptana.scripting.tests.PerformanceTests;
+import com.aptana.testing.categories.PerformanceTests;
 import com.aptana.testing.utils.TestProject;
 
 @Category({ PerformanceTests.class })

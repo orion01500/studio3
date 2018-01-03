@@ -22,7 +22,7 @@ import org.junit.experimental.categories.Category;
 import com.aptana.core.tests.GlobalTimePerformanceTestCase;
 import com.aptana.core.util.ResourceUtil;
 import com.aptana.editor.common.AbstractThemeableEditor;
-import com.aptana.scripting.tests.PerformanceTests;
+import com.aptana.testing.categories.PerformanceTests;
 import com.aptana.ui.util.UIUtils;
 
 @Category({PerformanceTests.class})

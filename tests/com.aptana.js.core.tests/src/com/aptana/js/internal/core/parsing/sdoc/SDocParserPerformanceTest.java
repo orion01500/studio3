@@ -23,7 +23,7 @@ import com.aptana.core.tests.GlobalTimePerformanceTestCase;
 import com.aptana.core.util.IOUtil;
 import com.aptana.js.core.JSCorePlugin;
 import com.aptana.js.core.tests.ITestFiles;
-import com.aptana.testing.PerformanceTests;
+import com.aptana.testing.categories.PerformanceTests;
 
 @Category({ PerformanceTests.class })
 public class SDocParserPerformanceTest extends GlobalTimePerformanceTestCase

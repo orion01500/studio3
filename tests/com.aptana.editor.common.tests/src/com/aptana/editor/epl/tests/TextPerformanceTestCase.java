@@ -15,18 +15,22 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import junit.framework.TestCase;
-
 import org.eclipse.test.performance.Dimension;
 import org.eclipse.test.performance.Performance;
 import org.eclipse.test.performance.PerformanceMeter;
+import org.junit.experimental.categories.Category;
+
+import com.aptana.testing.categories.PerformanceTests;
+
+import junit.framework.TestCase;
 
 /**
  * Superclass of Text performance test cases.
  *
  * @since 3.1
  */
-public class TextPerformanceTestCase extends TestCase {
+@Category({ PerformanceTests.class })
+public abstract class TextPerformanceTestCase extends TestCase {
 
 	private static final boolean DEBUG= false;
 

@@ -29,7 +29,7 @@ import com.aptana.js.internal.core.build.JSLintValidator;
 import com.aptana.parsing.IParseState;
 import com.aptana.parsing.ParseResult;
 import com.aptana.parsing.WorkingParseResult;
-import com.aptana.scripting.tests.PerformanceTests;
+import com.aptana.testing.categories.PerformanceTests;
 
 @Category({ PerformanceTests.class })
 public class JSLintValidatorPerformanceTest extends GlobalTimePerformanceTestCase

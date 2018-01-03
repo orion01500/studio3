@@ -2,9 +2,11 @@ package com.aptana.editor.css.formatter.tests;
 
 import java.util.Arrays;
 
+import org.junit.Before;
 import org.junit.runners.Parameterized.Parameters;
 
 import com.aptana.editor.common.formatting.AbstractFormatterTestCase;
+import com.aptana.editor.css.formatter.CSSFormatterFactory;
 
 public class FormattingTest extends AbstractFormatterTestCase
 {
@@ -18,34 +20,28 @@ public class FormattingTest extends AbstractFormatterTestCase
 	private static String TEST_BUNDLE_ID = "com.aptana.editor.css.formatter.tests"; //$NON-NLS-1$
 	private static String FILE_TYPE = "css"; //$NON-NLS-1$
 
-	/*
-	 * (non-Javadoc)
-	 * @see com.aptana.editor.common.formatting.AbstractFormatterTestCase#getTestBundleId()
-	 */
 	@Override
 	protected String getTestBundleId()
 	{
 		return TEST_BUNDLE_ID;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see com.aptana.editor.common.formatting.AbstractFormatterTestCase#getFormatterId()
-	 */
 	@Override
 	protected String getFormatterId()
 	{
 		return FORMATTER_FACTORY_ID;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see com.aptana.editor.common.formatting.AbstractFormatterTestCase#getFileType()
-	 */
 	@Override
 	protected String getFileType()
 	{
 		return FILE_TYPE;
+	}
+	
+	@Before
+	public void setUp() throws Exception
+	{
+		factory = new CSSFormatterFactory();
 	}
 
 	// Tests that are not working are named without the .css extension

@@ -23,7 +23,7 @@ import org.junit.experimental.categories.Category;
 import com.aptana.core.tests.GlobalTimePerformanceTestCase;
 import com.aptana.core.util.IOUtil;
 import com.aptana.editor.epl.tests.EditorTestHelper;
-import com.aptana.scripting.tests.PerformanceTests;
+import com.aptana.testing.categories.PerformanceTests;
 
 @Category({PerformanceTests.class})
 public class CSSCodeScannerPerformanceTest extends GlobalTimePerformanceTestCase

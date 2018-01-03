@@ -23,6 +23,7 @@ import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.osgi.service.datalocation.Location;
+import org.junit.Assume;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.osgi.framework.Version;
@@ -37,12 +38,14 @@ public class EclipseUtilTest
 	@Test
 	public void testGetApplicationLauncher()
 	{
+		// Don't run under tycho
+		Assume.assumeFalse(EclipseUtil.getApplicationId().equals("org.eclipse.tycho.surefire.osgibooter.headlesstest"));
+
 		IPath path = EclipseUtil.getApplicationLauncher();
 		assertNotNull(path);
 
 		boolean match = false;
 		String name = path.removeFileExtension().lastSegment();
-		System.out.println(name);
 		for (String launcherName : EclipseUtil.LAUNCHER_NAMES)
 		{
 			if (launcherName.equalsIgnoreCase(name))
@@ -69,21 +72,17 @@ public class EclipseUtilTest
 	{
 		assertNull(EclipseUtil.getProductBuildBranch(""));
 		assertNull(EclipseUtil.getProductBuildBranch());
-		assertEquals("release",
-				EclipseUtil.getProductBuildBranch("Appcelerator Studio, build: 4.0.0.201504010905\n"
-						+ "(c) Copyright 2012-2014 by Appcelerator, Inc.  All rights reserved.\n\n"
-						+ "Build: jenkins-appcelerator-rcp-release-446 (origin/release)\n"
-						+ "Date: 01 April 2015, 09:06:40"));
+		assertEquals("release", EclipseUtil.getProductBuildBranch("Appcelerator Studio, build: 4.0.0.201504010905\n"
+				+ "(c) Copyright 2012-2014 by Appcelerator, Inc.  All rights reserved.\n\n"
+				+ "Build: jenkins-appcelerator-rcp-release-446 (origin/release)\n" + "Date: 01 April 2015, 09:06:40"));
 		assertEquals("development",
 				EclipseUtil.getProductBuildBranch("Appcelerator Studio, build: 4.1.0.201504010726\n"
 						+ "(c) Copyright 2012-2014 by Appcelerator, Inc.  All rights reserved.\n\n"
 						+ "Build: jenkins-appcelerator-rcp-development-782 (origin/development)\n"
 						+ "Date: 01 April 2015, 07:27:30"));
-		assertEquals("master",
-				EclipseUtil.getProductBuildBranch("Appcelerator Studio, build: 3.4.2.201503201423\n"
-						+ "(c) Copyright 2012-2014 by Appcelerator, Inc.  All rights reserved.\n\n"
-						+ "Build: jenkins-appcelerator-rcp-master-266 (origin/master)\n"
-						+ "Date: 20 March 2015, 14:24:28"));
+		assertEquals("master", EclipseUtil.getProductBuildBranch("Appcelerator Studio, build: 3.4.2.201503201423\n"
+				+ "(c) Copyright 2012-2014 by Appcelerator, Inc.  All rights reserved.\n\n"
+				+ "Build: jenkins-appcelerator-rcp-master-266 (origin/master)\n" + "Date: 20 March 2015, 14:24:28"));
 	}
 
 	@Test
@@ -150,6 +149,9 @@ public class EclipseUtilTest
 	@Test
 	public void testLauncherFilter()
 	{
+		// Don't run under tycho
+		Assume.assumeFalse(EclipseUtil.getApplicationId().equals("org.eclipse.tycho.surefire.osgibooter.headlesstest"));
+
 		Location location = Platform.getInstallLocation();
 		assertNotNull(location);
 

@@ -3,7 +3,7 @@ package com.aptana.scripting.model;
 import org.junit.experimental.categories.Category;
 
 import com.aptana.core.tests.GlobalTimePerformanceTestCase;
-import com.aptana.scripting.tests.PerformanceTests;
+import com.aptana.testing.categories.PerformanceTests;
 @Category({PerformanceTests.class})
 public class BundleLoadingPerformanceTest extends GlobalTimePerformanceTestCase
 {

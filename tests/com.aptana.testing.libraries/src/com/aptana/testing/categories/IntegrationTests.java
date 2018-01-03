@@ -1,4 +1,4 @@
-package com.aptana.testing;
+package com.aptana.testing.categories;
 
 public interface IntegrationTests
 {

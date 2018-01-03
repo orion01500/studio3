@@ -21,7 +21,7 @@ import com.aptana.editor.common.CommonEditorPlugin;
 import com.aptana.editor.common.scripting.IDocumentScopeManager;
 import com.aptana.editor.common.scripting.commands.TextEditorUtils;
 import com.aptana.editor.epl.tests.EditorTestHelper;
-import com.aptana.scripting.tests.PerformanceTests;
+import com.aptana.testing.categories.PerformanceTests;
 import com.aptana.ui.util.UIUtils;
 
 @Category({ PerformanceTests.class })

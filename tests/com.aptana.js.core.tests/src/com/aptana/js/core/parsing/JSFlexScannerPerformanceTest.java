@@ -21,7 +21,7 @@ import com.aptana.js.core.JSCorePlugin;
 import com.aptana.js.core.tests.ITestFiles;
 import com.aptana.parsing.IParseState;
 import com.aptana.parsing.ParseState;
-import com.aptana.testing.PerformanceTests;
+import com.aptana.testing.categories.PerformanceTests;
 
 import beaver.Symbol;
 

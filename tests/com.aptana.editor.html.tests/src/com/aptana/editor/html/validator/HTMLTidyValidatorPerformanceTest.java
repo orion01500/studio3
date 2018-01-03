@@ -24,7 +24,7 @@ import com.aptana.editor.epl.tests.EditorTestHelper;
 import com.aptana.editor.html.HTMLPlugin;
 import com.aptana.index.core.FileStoreBuildContext;
 import com.aptana.index.core.build.BuildContext;
-import com.aptana.scripting.tests.PerformanceTests;
+import com.aptana.testing.categories.PerformanceTests;
 
 @Category({ PerformanceTests.class })
 public class HTMLTidyValidatorPerformanceTest extends GlobalTimePerformanceTestCase

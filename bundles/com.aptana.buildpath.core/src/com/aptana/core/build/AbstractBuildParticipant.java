@@ -246,7 +246,7 @@ public abstract class AbstractBuildParticipant implements IBuildParticipant, IEx
 			text = getText(source, commentNode);
 		}
 
-		if (!TaskTag.isCaseSensitive())
+		if (!areTaskTagsCaseSensitive())
 		{
 			text = text.toLowerCase();
 		}
@@ -258,7 +258,7 @@ public abstract class AbstractBuildParticipant implements IBuildParticipant, IEx
 			for (TaskTag entry : getTaskTags())
 			{
 				String tag = entry.getName();
-				if (!TaskTag.isCaseSensitive())
+				if (!areTaskTagsCaseSensitive())
 				{
 					tag = tag.toLowerCase();
 				}
@@ -282,6 +282,11 @@ public abstract class AbstractBuildParticipant implements IBuildParticipant, IEx
 			}
 		}
 		return tasks;
+	}
+
+	protected boolean areTaskTagsCaseSensitive()
+	{
+		return TaskTag.isCaseSensitive();
 	}
 
 	protected Collection<TaskTag> getTaskTags()

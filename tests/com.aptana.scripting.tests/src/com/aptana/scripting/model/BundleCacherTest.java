@@ -1,9 +1,10 @@
 package com.aptana.scripting.model;
 
-import org.junit.After;
-import org.junit.Test;
-import org.junit.Before;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -12,10 +13,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import junit.framework.TestCase;
-
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.jruby.RubyRegexp;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 import com.aptana.core.util.CollectionsUtil;
 import com.aptana.core.util.FileUtil;
@@ -32,7 +34,6 @@ public class BundleCacherTest
 	@Before
 	public void setUp() throws Exception
 	{
-//		super.setUp();
 		bundleManager = BundleManager.getInstance();
 		bundleManager.reset();
 		cacher = new BundleCacher();
@@ -41,19 +42,12 @@ public class BundleCacherTest
 	@After
 	public void tearDown() throws Exception
 	{
-		try
-		{
-			nonCached = null;
-			deserialized = null;
-			delete(bundleDirectory);
-			bundleDirectory = null;
-			cacher = null;
-			bundleManager = null;
-		}
-		finally
-		{
-//			super.tearDown();
-		}
+		nonCached = null;
+		deserialized = null;
+		delete(bundleDirectory);
+		bundleDirectory = null;
+		cacher = null;
+		bundleManager = null;
 	}
 
 	@Test
@@ -344,7 +338,8 @@ public class BundleCacherTest
 
 	protected void createBundleDirectory()
 	{
-		bundleDirectory = new File(FileUtil.getTempDirectory().toOSString(), "bundle_cache_test_" + System.currentTimeMillis());
+		bundleDirectory = new File(FileUtil.getTempDirectory().toOSString(),
+				"bundle_cache_test_" + System.currentTimeMillis());
 		bundleDirectory.mkdirs();
 		assertTrue("Failed to create test bundle directory", bundleDirectory.exists());
 	}

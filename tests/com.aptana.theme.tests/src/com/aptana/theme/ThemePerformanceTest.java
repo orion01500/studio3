@@ -23,7 +23,7 @@ import com.aptana.core.tests.GlobalTimePerformanceTestCase;
 import com.aptana.core.util.IOUtil;
 import com.aptana.core.util.StringUtil;
 import com.aptana.scope.ScopeSelector;
-import com.aptana.scripting.tests.PerformanceTests;
+import com.aptana.testing.categories.PerformanceTests;
 import com.aptana.theme.internal.ThemeManager;
 
 @Category({ PerformanceTests.class })

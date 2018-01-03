@@ -27,7 +27,7 @@ import com.aptana.core.build.UnifiedBuilder;
 import com.aptana.core.tests.GlobalTimePerformanceTestCase;
 import com.aptana.core.util.ResourceUtil;
 import com.aptana.js.core.JSCorePlugin;
-import com.aptana.scripting.tests.PerformanceTests;
+import com.aptana.testing.categories.PerformanceTests;
 import com.aptana.testing.utils.TestProject;
 
 @Category({ PerformanceTests.class })

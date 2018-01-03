@@ -77,10 +77,6 @@ public class EclipseUtil
 		{
 			IPath path = Path.fromOSString(dir.getAbsolutePath()).append(name);
 			name = path.removeFileExtension().lastSegment();
-			// Under tycho surefire, the default eclipse install dir is "work" under each plugin
-			if (EclipseUtil.isTesting() && "work".equals(name)) {
-				return true;
-			}
 			String ext = path.getFileExtension();
 			if (Platform.OS_MACOSX.equals(Platform.getOS()))
 			{
@@ -103,16 +99,12 @@ public class EclipseUtil
 	public static final String STANDALONE_PLUGIN_ID = "com.aptana.rcp"; //$NON-NLS-1$
 
 	@SuppressWarnings("nls")
-	private static final String[] UNIT_TEST_IDS = {
-		"org.eclipse.pde.junit.runtime.uitestapplication",
-		"org.eclipse.test.coretestapplication",
-		"org.eclipse.test.uitestapplication",
-		"org.eclipse.pde.junit.runtime.legacytestapplication",
-		"org.eclipse.pde.junit.runtime.coretestapplication",
-		"org.eclipse.pde.junit.runtime.coretestapplicationnonmain",
-		"org.eclipse.pde.junit.runtime.nonuithreadtestapplication",
-		"org.eclipse.tycho.surefire.osgibooter.headlesstest"
-	};
+	private static final String[] UNIT_TEST_IDS = { "org.eclipse.pde.junit.runtime.uitestapplication",
+			"org.eclipse.test.coretestapplication", "org.eclipse.test.uitestapplication",
+			"org.eclipse.pde.junit.runtime.legacytestapplication", "org.eclipse.pde.junit.runtime.coretestapplication",
+			"org.eclipse.pde.junit.runtime.coretestapplicationnonmain",
+			"org.eclipse.pde.junit.runtime.nonuithreadtestapplication",
+			"org.eclipse.tycho.surefire.osgibooter.headlesstest" };
 	@SuppressWarnings("nls")
 	static final String[] LAUNCHER_NAMES = { "Eclipse", "AptanaStudio3", "Aptana Studio 3", "TitaniumStudio",
 			"Titanium Studio" };
@@ -355,8 +347,7 @@ public class EclipseUtil
 		{
 			return isTesting;
 		}
-		String application = System.getProperty("eclipse.application"); //$NON-NLS-1$
-		System.out.println("eclipse.application: ");
+		String application = getApplicationId();
 		if (application != null)
 		{
 			for (String id : UNIT_TEST_IDS)
@@ -368,9 +359,63 @@ public class EclipseUtil
 				}
 			}
 		}
-		Object commands = System.getProperties().get("eclipse.commands"); //$NON-NLS-1$
-		isTesting = Boolean.valueOf((commands != null) ? commands.toString().contains("-testLoaderClass") : false); //$NON-NLS-1$
+		String[] args = getCommandLineArgs();
+		isTesting = ArrayUtil.contains(args, "-testLoaderClass"); //$NON-NLS-1$
 		return isTesting;
+	}
+	
+	static String getApplicationId()
+	{
+		String application = getEnvironmentOrSystemProperty("eclipse.application"); //$NON-NLS-1$
+		if (application != null)
+		{
+			return application;
+		}
+		application = getCommandLineArgValue("-application"); //$NON-NLS-1$
+		return application;
+	}
+	
+	private static String getCommandLineArgValue(String switchName)
+	{
+		String[] args = getCommandLineArgs();
+		for (int i = 0; i < args.length; ++i)
+		{
+			if (switchName.equals(args[i]) && (i + 1) < args.length) //$NON-NLS-1$
+			{
+				return args[i + 1];
+			}
+		}
+		return null;
+	}
+
+	private static String getEnvironmentOrSystemProperty(String propName)
+	{
+		String value = null;
+		EnvironmentInfo info = getEnvironmentInfo();
+		if (info != null)
+		{
+			value = info.getProperty(propName);
+		}
+		if (value != null)
+		{
+			return value;
+		}
+		return System.getProperty(propName);
+	}
+	
+	private static String[] getCommandLineArgs()
+	{
+		EnvironmentInfo info = getEnvironmentInfo();
+		if (info != null)
+		{
+			return info.getCommandLineArgs();
+		}
+		String cmdline = getEnvironmentOrSystemProperty("eclipse.commands");
+		if (cmdline != null && cmdline.length() > 0)
+		{
+			return cmdline.split("\n"); //$NON-NLS-1$
+		}
+		return ArrayUtil.NO_STRINGS;
 	}
 
 	/**
@@ -391,19 +436,8 @@ public class EclipseUtil
 	 */
 	public static IPath getApplicationLauncher(boolean asSplashLauncher)
 	{
-		IPath launcher = null;
-		String cmdline = System.getProperty("eclipse.commands"); //$NON-NLS-1$
-		if (cmdline != null && cmdline.length() > 0)
-		{
-			String[] args = cmdline.split("\n"); //$NON-NLS-1$
-			for (int i = 0; i < args.length; ++i)
-			{
-				if ("-launcher".equals(args[i]) && (i + 1) < args.length) { //$NON-NLS-1$
-					launcher = Path.fromOSString(args[i + 1]);
-					break;
-				}
-			}
-		}
+		String launcherName = getCommandLineArgValue("-launcher"); //$NON-NLS-1$
+		IPath launcher = launcherName == null ? null : Path.fromOSString(launcherName);
 		if (launcher == null)
 		{
 			Location location = Platform.getInstallLocation();
@@ -424,7 +458,7 @@ public class EclipseUtil
 		{
 			return null;
 		}
-		if (Platform.OS_MACOSX.equals(Platform.getOS()) && asSplashLauncher)
+		if (PlatformUtil.isMac() && asSplashLauncher)
 		{
 			launcher = new Path(PlatformUtil.getApplicationExecutable(launcher.toOSString()).getAbsolutePath());
 		}
@@ -499,17 +533,7 @@ public class EclipseUtil
 				IdeLog.logError(CorePlugin.getDefault(), e);
 			}
 		}
-		BundleContext context = CorePlugin.getDefault().getContext();
-		if (context == null)
-		{
-			return;
-		}
-		ServiceReference<EnvironmentInfo> ref = context.getServiceReference(EnvironmentInfo.class);
-		if (ref == null)
-		{
-			return;
-		}
-		EnvironmentInfo info = context.getService(ref);
+		EnvironmentInfo info = getEnvironmentInfo();
 		if (info != null)
 		{
 			if (debugEnabled)
@@ -521,6 +545,21 @@ public class EclipseUtil
 				info.setProperty(propertyName, null);
 			}
 		}
+	}
+
+	protected static EnvironmentInfo getEnvironmentInfo()
+	{
+		BundleContext context = CorePlugin.getDefault().getContext();
+		if (context == null)
+		{
+			return null;
+		}
+		ServiceReference<EnvironmentInfo> ref = context.getServiceReference(EnvironmentInfo.class);
+		if (ref == null)
+		{
+			return null;
+		}
+		return context.getService(ref);
 	}
 
 	/**
@@ -696,9 +735,10 @@ public class EclipseUtil
 
 		if (registry != null)
 		{
-			IdeLog.logInfo(CorePlugin.getDefault(), MessageFormat.format(
-					"Geting Extension Point for {0} and extensionPoint {1} from {2}", pluginId, extensionPointId, //$NON-NLS-1$
-					registry), IDebugScopes.EXTENSION_POINTS);
+			IdeLog.logInfo(CorePlugin.getDefault(),
+					MessageFormat.format("Geting Extension Point for {0} and extensionPoint {1} from {2}", pluginId, //$NON-NLS-1$
+							extensionPointId, registry),
+					IDebugScopes.EXTENSION_POINTS);
 			return registry.getExtensionPoint(pluginId, extensionPointId);
 		}
 		return null;
@@ -714,7 +754,8 @@ public class EclipseUtil
 		Set<String> elementNames = processor.getSupportElementNames();
 		IdeLog.logInfo(CorePlugin.getDefault(),
 				MessageFormat.format("Extension point : {0} and elements : {1}", extensionPoint, //$NON-NLS-1$
-						StringUtil.join(",", elementNames)), IDebugScopes.EXTENSION_POINTS);
+						StringUtil.join(",", elementNames)),
+				IDebugScopes.EXTENSION_POINTS);
 		IExtension[] extensions = extensionPoint.getExtensions();
 		for (String elementName : elementNames)
 		{
@@ -729,9 +770,10 @@ public class EclipseUtil
 						processor.processElement(element);
 						if (IdeLog.isTraceEnabled(CorePlugin.getDefault(), IDebugScopes.EXTENSION_POINTS))
 						{
-							IdeLog.logTrace(CorePlugin.getDefault(), MessageFormat.format(
-									"Processing extension element {0} with attributes {1}", element.getName(), //$NON-NLS-1$
-									collectElementAttributes(element)), IDebugScopes.EXTENSION_POINTS);
+							IdeLog.logTrace(CorePlugin.getDefault(),
+									MessageFormat.format("Processing extension element {0} with attributes {1}", //$NON-NLS-1$
+											element.getName(), collectElementAttributes(element)),
+									IDebugScopes.EXTENSION_POINTS);
 						}
 					}
 				}
@@ -776,7 +818,8 @@ public class EclipseUtil
 		// If iconPath doesn't specify a scheme, then try to transform to a URL
 		// RFC 3986: scheme = ALPHA *( ALPHA / DIGIT / "+" / "-" / "." )
 		// This allows using data:, http:, or other custom URL schemes
-		if (!iconPath.matches("\\p{Alpha}[\\p{Alnum}+.-]*:.*")) { //$NON-NLS-1$
+		if (!iconPath.matches("\\p{Alpha}[\\p{Alnum}+.-]*:.*")) //$NON-NLS-1$
+		{
 			String extendingPluginId = element.getDeclaringExtension().getContributor().getName();
 			iconPath = "platform:/plugin/" + extendingPluginId + "/" + iconPath; //$NON-NLS-1$//$NON-NLS-2$
 		}

@@ -27,7 +27,7 @@ import com.aptana.editor.common.IPartitioningConfiguration;
 import com.aptana.editor.epl.tests.EditorTestHelper;
 import com.aptana.editor.js.JSSourceConfiguration;
 import com.aptana.js.core.JSCorePlugin;
-import com.aptana.scripting.tests.PerformanceTests;
+import com.aptana.testing.categories.PerformanceTests;
 
 @Category({ PerformanceTests.class })
 public class JSSourcePartitionScannerPerformanceTest extends GlobalTimePerformanceTestCase

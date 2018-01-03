@@ -16,7 +16,7 @@ import org.junit.experimental.categories.Category;
 
 import com.aptana.core.tests.GlobalTimePerformanceTestCase;
 import com.aptana.core.util.IOUtil;
-import com.aptana.css.core.tests.PerformanceTests;
+import com.aptana.testing.categories.PerformanceTests;
 
 import beaver.Symbol;
 

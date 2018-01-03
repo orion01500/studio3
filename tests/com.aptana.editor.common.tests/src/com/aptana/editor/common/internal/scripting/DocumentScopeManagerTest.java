@@ -3,6 +3,8 @@ package com.aptana.editor.common.internal.scripting;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.Before;
+import org.junit.Ignore;
+
 import static org.junit.Assert.*;
 import java.io.File;
 import java.io.FileWriter;
@@ -42,7 +44,6 @@ public class DocumentScopeManagerTest
 	@Before
 	public void setUp() throws Exception
 	{
-//		super.setUp();
 		setUpBasicScopes();
 
 		EditorTestHelper.closeAllEditors();
@@ -85,7 +86,6 @@ public class DocumentScopeManagerTest
 		}
 
 		manager = null;
-//		super.tearDown();
 	}
 
 	protected IContentTypeTranslator getContentTypeTranslator()
@@ -173,8 +173,10 @@ public class DocumentScopeManagerTest
 	 * @throws Exception
 	 */
 	@Test
+	@Ignore("This relies on the JS editor and causes a dependency cycle")
 	public void testGetScopeAtOffsetSourceViewer() throws Exception
 	{
+		// FIXME This relies on JS editor!
 		setUpStandardScopes();
 
 		createAndOpenFile("testing", ".js",
@@ -188,8 +190,10 @@ public class DocumentScopeManagerTest
 	}
 
 	@Test
+	@Ignore("This relies on the JS editor and projects plugin and causes a dependency cycle")
 	public void testGetScopeWithMetaProjectNaturePrepended() throws Exception
 	{
+		// FIXME This relies on JS editor!
 		setUpStandardScopes();
 
 		project = new TestProject("scope_nature", new String[] { "com.aptana.projects.webnature" });
@@ -204,8 +208,10 @@ public class DocumentScopeManagerTest
 	}
 
 	@Test
+	@Ignore("This relies on the JS editor and causes a dependency cycle")
 	public void testGetScopeAtEndOfFile() throws Exception
 	{
+		// FIXME This relies on JS editor!
 		setUpStandardScopes();
 
 		createAndOpenFile("eof_scope", ".js", "// This is a comment");
@@ -215,8 +221,10 @@ public class DocumentScopeManagerTest
 	}
 
 	@Test
+	@Ignore("This relies on the HTML editor and causes a dependency cycle")
 	public void testOffByOneBug() throws Exception
 	{
+		// FIXME This relies on HTML editor!
 		setUpStandardScopes();
 
 		createAndOpenFile("testing", ".html", "<html>\n  <head>\n" + "    <style type=\"text/css\">\n"
@@ -236,8 +244,10 @@ public class DocumentScopeManagerTest
 	 * @throws Exception
 	 */
 	@Test
+	@Ignore("This relies on the JS editor and causes a dependency cycle")
 	public void testGetScopeAtOffsetDoc() throws Exception
 	{
+		// FIXME This relies on JS editor!
 		setUpStandardScopes();
 
 		createAndOpenFile("testing", ".js",
