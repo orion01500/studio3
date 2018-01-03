@@ -1047,7 +1047,7 @@ public class BundleManager
 
 			if (result == null)
 			{
-				result = new ArrayList<String>(ScriptingEngine.getInstance().getContributedLoadPaths());
+				result = new ArrayList<String>(getScriptingEngine().getContributedLoadPaths());
 			}
 
 			result.add(0, BundleUtils.getBundleLibDirectory(bundleDirectory));
@@ -1074,7 +1074,7 @@ public class BundleManager
 			result.addAll(entry.getLoadPaths());
 		}
 
-		result.addAll(ScriptingEngine.getInstance().getContributedLoadPaths());
+		result.addAll(getScriptingEngine().getContributedLoadPaths());
 
 		return result;
 	}
@@ -2029,7 +2029,7 @@ public class BundleManager
 		}
 
 		this.showBundleLoadInfo(MessageFormat.format("Loading script: {0}, fire event={1}", script, fireEvent)); //$NON-NLS-1$
-		ScriptingEngine.getInstance().runScript(script.getAbsolutePath(), loadPaths);
+		getScriptingEngine().runScript(script.getAbsolutePath(), loadPaths);
 		this.showBundleLoadInfo(MessageFormat.format("Loading complete: {0}", script)); //$NON-NLS-1$
 
 		if (fireEvent)
@@ -2097,10 +2097,15 @@ public class BundleManager
 		List<String> loadPaths = this.getBundleLoadPaths(bundleDirectory);
 
 		// execute script. Load order is important, so we force synchronous execution here
-		ScriptingEngine.getInstance().runScript(script.getAbsolutePath(), loadPaths, RunType.THREAD, false);
+		getScriptingEngine().runScript(script.getAbsolutePath(), loadPaths, RunType.THREAD, false);
 
 		// fire reload event
 		this.fireScriptReloadedEvent(script);
+	}
+
+	protected ScriptingEngine getScriptingEngine()
+	{
+		return ScriptingEngine.getInstance();
 	}
 
 	/**

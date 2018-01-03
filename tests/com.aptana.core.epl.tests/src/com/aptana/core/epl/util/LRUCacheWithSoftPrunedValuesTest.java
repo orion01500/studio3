@@ -20,6 +20,7 @@ import org.junit.Test;
 
 public class LRUCacheWithSoftPrunedValuesTest
 {
+	private static final int ONE_MB = 1024 * 1024; // 1 MB
 
 	class SizedEntry implements ILRUCacheable
 	{
@@ -125,7 +126,7 @@ public class LRUCacheWithSoftPrunedValuesTest
 		{
 			for (int i = 0; i < Integer.MAX_VALUE; i++)
 			{
-				cache.put(i, new SizedEntry(1, new byte[1024 * 1024 * 10])); // 10 MB // FIXME Bump up memory faster to speed up test?
+				cache.put(i, new SizedEntry(1, new byte[ONE_MB]));
 				assertEquals(3, cache.getCurrentSpace()); // Space is always the same
 				int previousSize = softHashMap.size();
 				softHashMap.removeStaleEntries();

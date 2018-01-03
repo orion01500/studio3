@@ -20,7 +20,7 @@
 				<version>${tycho-version}</version>
 				<configuration>
 					<useUIHarness>true</useUIHarness>
-					<useUIThread>false</useUIThread>
+					<useUIThread>true</useUIThread> <!-- required by a number of tests -->
 					<argLine>${ui.test.args}</argLine>
 					<excludedGroups>com.aptana.testing.categories.PerformanceTests</excludedGroups>
 				</configuration>

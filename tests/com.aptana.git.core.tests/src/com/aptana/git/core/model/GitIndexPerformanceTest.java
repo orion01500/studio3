@@ -7,6 +7,7 @@ import java.util.UUID;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.test.performance.Performance;
 import org.eclipse.test.performance.PerformanceMeter;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -31,11 +32,10 @@ public class GitIndexPerformanceTest extends GitTestCase
 				.createPerformanceMeter(getClass().getName() + '#' + name.getMethodName() + "()"); //$NON-NLS-1$
 	}
 
-	@Override
+	@After
 	public void tearDown() throws Exception
 	{
 		fPerformanceMeter.dispose();
-		super.tearDown();
 	}
 
 	@Test

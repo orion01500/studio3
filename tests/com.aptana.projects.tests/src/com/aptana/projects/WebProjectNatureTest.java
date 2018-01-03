@@ -120,11 +120,5 @@ public class WebProjectNatureTest
 	{
 		assertTrue(ResourceUtil.isAptanaNature(WebProjectNature.ID));
 	}
-	
-	@Test
-	public void testIsAptanaNature()
-	{
-		assertTrue(ResourceUtil.isAptanaNature(WebProjectNature.ID));
-	}
 
 }

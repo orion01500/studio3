@@ -11,7 +11,7 @@
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
 
-	<!-- For now, skip performance tests -->
+	<!-- Skip performance tests, run in UI -->
 	<build>
 		<plugins>
 			<plugin>
@@ -19,7 +19,10 @@
 				<artifactId>tycho-surefire-plugin</artifactId>
 				<version>${tycho-version}</version>
 				<configuration>
-					<excludedGroups>com.aptana.testing.categories.PerformanceTests</excludedGroups>
+					<useUIHarness>true</useUIHarness>
+					<useUIThread>true</useUIThread> <!-- required by a number of tests -->
+					<argLine>${ui.test.args}</argLine>
+					<excludedGroups>com.aptana.testing.categories.PerformanceTests,com.aptana.testing.categories.IntegrationTests</excludedGroups>
 				</configuration>
 			</plugin>
 		</plugins>

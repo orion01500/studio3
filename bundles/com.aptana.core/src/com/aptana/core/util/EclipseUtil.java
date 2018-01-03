@@ -99,12 +99,17 @@ public class EclipseUtil
 	public static final String STANDALONE_PLUGIN_ID = "com.aptana.rcp"; //$NON-NLS-1$
 
 	@SuppressWarnings("nls")
-	private static final String[] UNIT_TEST_IDS = { "org.eclipse.pde.junit.runtime.uitestapplication",
-			"org.eclipse.test.coretestapplication", "org.eclipse.test.uitestapplication",
-			"org.eclipse.pde.junit.runtime.legacytestapplication", "org.eclipse.pde.junit.runtime.coretestapplication",
+	private static final String[] UNIT_TEST_IDS = {
+			"org.eclipse.pde.junit.runtime.uitestapplication",
+			"org.eclipse.test.coretestapplication",
+			"org.eclipse.test.uitestapplication",
+			"org.eclipse.pde.junit.runtime.legacytestapplication",
+			"org.eclipse.pde.junit.runtime.coretestapplication",
 			"org.eclipse.pde.junit.runtime.coretestapplicationnonmain",
 			"org.eclipse.pde.junit.runtime.nonuithreadtestapplication",
-			"org.eclipse.tycho.surefire.osgibooter.headlesstest" };
+			"org.eclipse.tycho.surefire.osgibooter.headlesstest",
+			"org.eclipse.tycho.surefire.osgibooter.uitest"
+	};
 	@SuppressWarnings("nls")
 	static final String[] LAUNCHER_NAMES = { "Eclipse", "AptanaStudio3", "Aptana Studio 3", "TitaniumStudio",
 			"Titanium Studio" };
