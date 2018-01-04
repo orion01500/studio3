@@ -23,7 +23,9 @@ timestamps {
 
 			stage('Build') {
 				withEnv(["PATH+MAVEN=${tool name: 'Maven 3.5.0', type: 'maven'}/bin"]) {
-					sh 'mvn clean verify'
+					wrap([$class: 'Xvnc', takeScreenshot: false, useXauthority: true]) {
+						sh 'mvn clean verify'
+					}
 				}
 				junit 'tests/*/target/surefire-reports/TEST-*.xml'
 				dir('releng/com.aptana.studio.update/target') {
