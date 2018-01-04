@@ -23,9 +23,9 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import org.eclipse.core.filesystem.EFS;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.debug.core.ILaunchManager;
 import org.junit.Test;
 
 /**
@@ -52,6 +52,7 @@ public class LocalWebServerTest
 		try
 		{
 			webServer = new LocalWebServer(dir.toURI());
+			webServer.start(ILaunchManager.RUN_MODE, new NullProgressMonitor());
 			URL url = webServer.getBaseURL();
 			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 			connection.setAllowUserInteraction(false);

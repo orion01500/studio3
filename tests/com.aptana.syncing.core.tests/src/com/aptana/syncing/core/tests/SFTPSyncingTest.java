@@ -10,12 +10,15 @@ package com.aptana.syncing.core.tests;
 import java.io.File;
 
 import org.eclipse.core.runtime.Path;
+import org.junit.experimental.categories.Category;
 
 import com.aptana.filesystem.secureftp.SFTPConnectionPoint;
 import com.aptana.ide.core.io.ConnectionContext;
 import com.aptana.ide.core.io.CoreIOPlugin;
 import com.aptana.ide.core.io.LocalConnectionPoint;
+import com.aptana.testing.categories.IntegrationTests;
 
+@Category({ IntegrationTests.class })
 public class SFTPSyncingTest extends SyncingTests
 {
 

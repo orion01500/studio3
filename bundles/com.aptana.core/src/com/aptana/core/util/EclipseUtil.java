@@ -98,6 +98,9 @@ public class EclipseUtil
 
 	public static final String STANDALONE_PLUGIN_ID = "com.aptana.rcp"; //$NON-NLS-1$
 
+	private static final String TYCHO_HEADLESS = "org.eclipse.tycho.surefire.osgibooter.headlesstest"; //$NON-NLS-1$
+	private static final String TYCHO_UI = "org.eclipse.tycho.surefire.osgibooter.uitest"; //$NON-NLS-1$
+	
 	@SuppressWarnings("nls")
 	private static final String[] UNIT_TEST_IDS = {
 			"org.eclipse.pde.junit.runtime.uitestapplication",
@@ -107,8 +110,8 @@ public class EclipseUtil
 			"org.eclipse.pde.junit.runtime.coretestapplication",
 			"org.eclipse.pde.junit.runtime.coretestapplicationnonmain",
 			"org.eclipse.pde.junit.runtime.nonuithreadtestapplication",
-			"org.eclipse.tycho.surefire.osgibooter.headlesstest",
-			"org.eclipse.tycho.surefire.osgibooter.uitest"
+			TYCHO_HEADLESS,
+			TYCHO_UI
 	};
 	@SuppressWarnings("nls")
 	static final String[] LAUNCHER_NAMES = { "Eclipse", "AptanaStudio3", "Aptana Studio 3", "TitaniumStudio",
@@ -899,6 +902,12 @@ public class EclipseUtil
 	{
 		return getProductBuildBranch(getProductProperty("aboutText")); //$NON-NLS-1$
 
+	}
+
+	public static boolean isTycho()
+	{
+		String appId = getApplicationId();
+		return TYCHO_HEADLESS.equals(appId) || TYCHO_UI.equals(appId);
 	}
 
 }

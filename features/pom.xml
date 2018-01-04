@@ -13,5 +13,6 @@
 
 	<modules>
 		<module>com.aptana.feature</module>
+		<module>com.aptana.studio.test</module>
 	</modules>
 </project>

@@ -18,3 +18,4 @@ Export-Package: org.apache.http.impl.nio;version="4.3.3",
  org.apache.http.nio.reactor;version="4.3.3",
  org.apache.http.nio.reactor.ssl;version="4.3.3",
  org.apache.http.nio.util;version="4.3.3"
+Require-Bundle: org.apache.httpcomponents.httpcore;bundle-version="4.3.3"

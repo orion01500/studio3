@@ -14,5 +14,6 @@
 	<modules>
 		<module>com.aptana.studio.update</module>
 		<module>com.aptana.studio.target</module>
+		<module>com.aptana.studio.tests.update</module>
 	</modules>
 </project>
