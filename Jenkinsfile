@@ -1,6 +1,7 @@
 #! groovy
 timestamps {
-	node('((linux && vncserver) || osx) && jdk') {
+	// node('((linux && vncserver) || osx) && jdk') {
+	node('linux && vncserver && jdk') {
 		try {
 			stage('Checkout') {
 				checkout scm
@@ -16,6 +17,7 @@ timestamps {
 					targetFile = 'releng/com.aptana.studio.target/com.aptana.studio.target.target'
 					find = 'file:/Users/cwilliams/repos/libraries_com/releng/com.aptana.ide.libraries.subscription.update/target/repository'.replaceAll('/', '\\\\/')
 					replace = "file:${pwd()}/libraries_com/repository".replaceAll('/', '\\\\/')
+					// FIXME sed -i doesn't work right on macs...
 					sh "sed -i 's/${find}/${replace}/g' ${targetFile}"
 			}
 
@@ -25,11 +27,16 @@ timestamps {
 				}
 				junit 'tests/*/target/surefire-reports/TEST-*.xml'
 				dir('releng/com.aptana.studio.update/target') {
-					// FIXME: To keep backwards compatability with existing build pipeline, I probably need to make the "repository" dir be "dist"
-					archiveArtifacts artifacts: 'repository/**/*'
-					def jarName = sh(returnStdout: true, script: 'ls repository/features/com.aptana.feature_*.jar').trim()
+					// To keep backwards compatability with existing build pipeline, rename to "dist"
+					sh 'mv repository dist'
+					archiveArtifacts artifacts: 'dist/**/*'
+					def jarName = sh(returnStdout: true, script: 'ls dist/features/com.aptana.feature_*.jar').trim()
 					def version = (jarName =~ /.*?_(.+)\.jar/)[0][1]
 					currentBuild.displayName = "#${version}-${currentBuild.number}"
+				}
+				dir('releng/com.aptana.studio.test.update/target') {
+					sh 'mv repository dist-tests'
+					archiveArtifacts artifacts: 'dist-tests/**/*'
 				}
 			}
 
