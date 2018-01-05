@@ -24,10 +24,15 @@ timestamps {
 			stage('Build') {
 				withEnv(["PATH+MAVEN=${tool name: 'Maven 3.5.0', type: 'maven'}/bin"]) {
 					wrap([$class: 'Xvnc', takeScreenshot: false, useXauthority: true]) {
-						sh 'mvn clean verify'
+						try {
+							sh 'mvn -Dmaven.test.failure.ignore=true clean verify'
+						} catch (e) {
+							// record tests even if we failed
+							junit 'tests/*/target/surefire-reports/TEST-*.xml'
+							throw e
+						}
 					}
 				}
-				junit 'tests/*/target/surefire-reports/TEST-*.xml'
 				dir('releng/com.aptana.studio.update/target') {
 					// To keep backwards compatability with existing build pipeline, rename to "dist"
 					sh 'mv repository dist'
