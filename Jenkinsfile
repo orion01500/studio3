@@ -26,10 +26,9 @@ timestamps {
 					wrap([$class: 'Xvnc', takeScreenshot: false, useXauthority: true]) {
 						try {
 							sh 'mvn -Dmaven.test.failure.ignore=true clean verify'
-						} catch (e) {
+						} finally {
 							// record tests even if we failed
 							junit 'tests/*/target/surefire-reports/TEST-*.xml'
-							throw e
 						}
 					}
 				}
@@ -50,9 +49,10 @@ timestamps {
 			// If not a PR, trigger downstream builds for same branch
 			if (!env.BRANCH_NAME.startsWith('PR-')) {
 				build job: "appcelerator-studio/titanium_studio/${env.BRANCH_NAME}", wait: false
-				build job: "../studio3-php/${env.BRANCH_NAME}", wait: false
-				build job: "../studio3-ruby/${env.BRANCH_NAME}", wait: false
-				build job: "../Pydev/${env.BRANCH_NAME}", wait: false
+				// TODO: Re-enable pydev/ruby/php builds
+				// build job: "../studio3-php/${env.BRANCH_NAME}", wait: false
+				// build job: "../studio3-ruby/${env.BRANCH_NAME}", wait: false
+				// build job: "../Pydev/${env.BRANCH_NAME}", wait: false
 			}
 		} catch (e) {
 			// if any exception occurs, mark the build as failed
