@@ -8,7 +8,13 @@
 
 	<properties>
 		<tycho-version>1.0.0</tycho-version>
+		<tycho-extras.version>${tycho-version}</tycho-extras.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<jarsigner.alias>appcelerator</jarsigner.alias>
+		<!-- DON'T CHECK THIS IN!!!! Developers should point to the keystore and password in their own envs! -->
+		<jarsigner.keystore>${env.HOME}/appcelerator.keystore</jarsigner.keystore>
+		<jarsigner.keypass></jarsigner.keypass>
+		<jarsigner.storepass></jarsigner.storepass>
 	</properties>
 
 	<build>
@@ -19,7 +25,7 @@
 				<version>${tycho-version}</version>
 				<extensions>true</extensions>
 			</plugin>
-
+			<!-- target platform -->
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>target-platform-configuration</artifactId>
@@ -61,6 +67,48 @@
 							<arch>x86_64</arch>
 						</environment>
 					</environments>
+				</configuration>
+			</plugin>
+			<!-- Sign the JARs -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jarsigner-plugin</artifactId>
+				<version>1.2</version>
+				<configuration>
+					<keystore>${jarsigner.keystore}</keystore>
+					<storepass>${jarsigner.storepass}</storepass>
+					<alias>${jarsigner.alias}</alias>
+					<keypass>${jarsigner.keypass}</keypass>
+				</configuration>
+				<executions>
+					<execution>
+						<id>sign</id>
+						<goals>
+							<goal>sign</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<!-- use last git commit timestamp as build qualifier for plugins -->
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-packaging-plugin</artifactId>
+				<version>${tycho-version}</version>
+				<dependencies>
+					<dependency>
+						<groupId>org.eclipse.tycho.extras</groupId>
+						<artifactId>tycho-buildtimestamp-jgit</artifactId>
+						<version>${tycho-extras.version}</version>
+					</dependency>
+				</dependencies>
+				<configuration>
+					<timestampProvider>jgit</timestampProvider>
+					<jgit.ignore>
+					pom.xml
+					.polyglot.build.properties
+					</jgit.ignore>
+					<!-- FIXME Set to warning? Only override to ignore on specific plugins liek titanium.core where we hack the qualifier? -->
+					<jgit.dirtyWorkingTree>ignore</jgit.dirtyWorkingTree>
 				</configuration>
 			</plugin>
 		</plugins>
