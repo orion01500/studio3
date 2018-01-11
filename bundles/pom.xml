@@ -95,7 +95,6 @@
     <module>com.aptana.webserver.ui</module>
     <module>com.aptana.workbench</module>
     <module>com.aptana.xml.core</module>
-    <module>mestevens.xcode.parser</module>
     <module>org.apache.httpcomponents.httpcore-nio</module>
     <module>org.apache.velocity</module>
     <module>org.eclipse.tm.terminal</module>
