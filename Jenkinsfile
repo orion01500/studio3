@@ -9,14 +9,7 @@ timestamps {
 	// node('((linux && vncserver) || osx) && jdk') { // TODO: Re-enable choosin osx box?
 	node('linux && vncserver && jdk') {
 		stage('Checkout') {
-			// checkout scm
-			// Hack for JENKINS-37658 - see https://support.cloudbees.com/hc/en-us/articles/226122247-How-to-Customize-Checkout-for-Pipeline-Multibranch
-			checkout([
-				$class: 'GitSCM',
-				branches: scm.branches,
-				extensions: scm.extensions + [[$class: 'CleanBeforeCheckout'], [$class: 'CloneOption', honorRefspec: true, noTags: true, reference: '', shallow: true, depth: 30, timeout: 30]],
-				userRemoteConfigs: scm.userRemoteConfigs
-			])
+			checkout scm
 		}
 
 		stage('Dependencies') {
@@ -30,6 +23,7 @@ timestamps {
 
 		stage('Build') {
 			withEnv(["PATH+MAVEN=${tool name: 'Maven 3.5.0', type: 'maven'}/bin"]) {
+				// https://stackoverflow.com/questions/10463077/how-to-refer-environment-variable-in-pom-xml
 				withCredentials([usernamePassword(credentialsId: 'aca99bee-0f1e-4fc5-a3da-3dfd73f66432', passwordVariable: 'STOREPASS', usernameVariable: 'ALIAS')]) {
 					wrap([$class: 'Xvnc', takeScreenshot: false, useXauthority: true]) {
 						try {
