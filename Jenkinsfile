@@ -6,7 +6,14 @@ timestamps {
 	// node('((linux && vncserver) || osx) && jdk') {
 	node('linux && vncserver && jdk') {
 		stage('Checkout') {
-			checkout scm
+			// checkout scm
+			// Hack for JENKINS-37658 - see https://support.cloudbees.com/hc/en-us/articles/226122247-How-to-Customize-Checkout-for-Pipeline-Multibranch
+			checkout([
+				$class: 'GitSCM',
+				branches: scm.branches,
+				extensions: scm.extensions + [[$class: 'CleanBeforeCheckout'], [$class: 'CloneOption', honorRefspec: true, noTags: true, reference: '', shallow: true, depth: 30, timeout: 30]],
+				userRemoteConfigs: scm.userRemoteConfigs
+			])
 		}
 
 		stage('Dependencies') {
@@ -25,11 +32,12 @@ timestamps {
 
 		stage('Build') {
 			withEnv(["PATH+MAVEN=${tool name: 'Maven 3.5.0', type: 'maven'}/bin"]) {
-				// https://stackoverflow.com/questions/10463077/how-to-refer-environment-variable-in-pom-xml
 				withCredentials([usernamePassword(credentialsId: 'aca99bee-0f1e-4fc5-a3da-3dfd73f66432', passwordVariable: 'STOREPASS', usernameVariable: 'ALIAS')]) {
 					wrap([$class: 'Xvnc', takeScreenshot: false, useXauthority: true]) {
 						try {
-							sh "mvn -Dmaven.test.failure.ignore=true -Djarsigner.keypass=${env.STOREPASS} -Djarsigner.storepass=${env.STOREPASS} -Djarsigner.keystore=${env.KEYSTORE} clean verify"
+							timeout(30) {
+								sh "mvn -Dmaven.test.failure.ignore=true -Djarsigner.keypass=${env.STOREPASS} -Djarsigner.storepass=${env.STOREPASS} -Djarsigner.keystore=${env.KEYSTORE} clean verify"
+							}
 						} finally {
 							// record tests even if we failed
 							junit 'tests/*/target/surefire-reports/TEST-*.xml'
