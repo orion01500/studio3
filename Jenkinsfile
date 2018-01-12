@@ -1,9 +1,12 @@
 #! groovy
 // Keep logs/reports/etc of last 3 builds, only keep build artifacts of last build
 properties([buildDiscarder(logRotator(numToKeepStr: '3', artifactNumToKeepStr: '1'))])
+// Set after copying upstream artifacts
+// Tells maven where to assume a p2 repo holding the sftp libraries would be
+def sftpURL = ''
 
 timestamps {
-	// node('((linux && vncserver) || osx) && jdk') {
+	// node('((linux && vncserver) || osx) && jdk') { // TODO: Re-enable choosin osx box?
 	node('linux && vncserver && jdk') {
 		stage('Checkout') {
 			// checkout scm
@@ -22,12 +25,7 @@ timestamps {
 				fingerprintArtifacts: true,
 				projectName: "../libraries_com/tycho",
 				target: 'libraries_com'])
-			// Hack the target definition to point to libraries_com repo
-			targetFile = 'releng/com.aptana.studio.target/com.aptana.studio.target.target'
-			find = 'file:/Users/cwilliams/repos/libraries_com/releng/com.aptana.ide.libraries.subscription.update/target/repository'.replaceAll('/', '\\\\/')
-			replace = "file:${pwd()}/libraries_com/repository".replaceAll('/', '\\\\/')
-			// FIXME sed -i doesn't work right on macs...
-			sh "sed -i 's/${find}/${replace}/g' ${targetFile}"
+			sftpURL = "file:${pwd()}/libraries_com/repository"
 		} // stage('Dependencies')
 
 		stage('Build') {
@@ -36,7 +34,7 @@ timestamps {
 					wrap([$class: 'Xvnc', takeScreenshot: false, useXauthority: true]) {
 						try {
 							timeout(30) {
-								sh "mvn -Dmaven.test.failure.ignore=true -Djarsigner.keypass=${env.STOREPASS} -Djarsigner.storepass=${env.STOREPASS} -Djarsigner.keystore=${env.KEYSTORE} clean verify"
+								sh "mvn -Dsftp.p2.repo.url=${sftpURL} -Dmaven.test.failure.ignore=true -Djarsigner.keypass=${env.STOREPASS} -Djarsigner.storepass=${env.STOREPASS} -Djarsigner.keystore=${env.KEYSTORE} clean verify"
 							}
 						} finally {
 							// record tests even if we failed

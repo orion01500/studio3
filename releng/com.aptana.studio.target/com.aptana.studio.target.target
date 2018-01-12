@@ -2,10 +2,6 @@
 <?pde version="3.8"?><target name="com.aptana.studio.target" sequenceNumber="25">
 <locations>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="false" type="InstallableUnit">
-<unit id="com.aptana.ide.feature.libraries.subscription.feature.group" version="0.0.0"/>
-<repository location="file:/Users/cwilliams/repos/libraries_com/releng/com.aptana.ide.libraries.subscription.update/target/repository/"/>
-</location>
-<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="false" type="InstallableUnit">
 <unit id="com.fasterxml.jackson.core.jackson-annotations" version="2.6.2.v20161117-2150"/>
 <unit id="com.fasterxml.jackson.core.jackson-core" version="2.6.2.v20161117-2150"/>
 <unit id="com.fasterxml.jackson.core.jackson-databind" version="2.6.2.v20161117-2150"/>

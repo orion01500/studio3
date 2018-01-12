@@ -10,12 +10,22 @@
 		<tycho-version>1.0.0</tycho-version>
 		<tycho-extras.version>${tycho-version}</tycho-extras.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<!-- by default assume libraries_com git repo is a sibling of studio3 on dev's machine -->
+		<sftp.p2.repo.url>file:${project.basedir}/../../../libraries_com/releng/com.aptana.ide.libraries.subscription.update/target/repository/</sftp.p2.repo.url>
 		<jarsigner.alias>appcelerator</jarsigner.alias>
 		<!-- DON'T CHECK THIS IN!!!! Developers should point to the keystore and password in their own envs! -->
 		<jarsigner.keystore>${env.HOME}/appcelerator.keystore</jarsigner.keystore>
 		<jarsigner.keypass></jarsigner.keypass>
 		<jarsigner.storepass></jarsigner.storepass>
 	</properties>
+
+	<repositories>
+		<repository>
+			<id>aptana-sftp-libraries</id>
+			<url>${sftp.p2.repo.url}</url>
+			<layout>p2</layout>
+		</repository>
+	</repositories>
 
 	<build>
 		<plugins>
