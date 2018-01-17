@@ -54,9 +54,9 @@ timestamps {
 		// If not a PR, trigger downstream builds for same branch
 		if (!env.BRANCH_NAME.startsWith('PR-')) {
 			build job: "appcelerator-studio/titanium_studio/${env.BRANCH_NAME}", wait: false
-			// TODO: Re-enable pydev/ruby/php builds
-			// build job: "../studio3-php/${env.BRANCH_NAME}", wait: false
-			// build job: "../studio3-ruby/${env.BRANCH_NAME}", wait: false
+			// TODO: Re-enable pydev builds
+			build job: "../studio3-php/${env.BRANCH_NAME}", wait: false
+			build job: "../studio3-ruby/${env.BRANCH_NAME}", wait: false
 			// build job: "../Pydev/${env.BRANCH_NAME}", wait: false
 		}
 	} // node
